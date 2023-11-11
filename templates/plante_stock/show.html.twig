@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}PlanteStock{% endblock %}
+
+{% block body %}
+    <h1>PlanteStock</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ plante_stock.id }}</td>
+            </tr>
+            <tr>
+                <th>NomPlante</th>
+                <td>{{ plante_stock.nomPlante }}</td>
+            </tr>
+            <tr>
+                <th>EtatPlante</th>
+                <td>{{ plante_stock.etatPlante }}</td>
+            </tr>
+            <tr>
+                <th>QuantitePlante</th>
+                <td>{{ plante_stock.quantitePlante }}</td>
+            </tr>
+            <tr>
+                <th>DateEntreeStock</th>
+                <td>{{ plante_stock.dateEntreeStock ? plante_stock.dateEntreeStock|date('Y-m-d') : '' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_plante_stock_index') }}">back to list</a>
+
+    <a href="{{ path('app_plante_stock_edit', {'id': plante_stock.id}) }}">edit</a>
+
+    {{ include('plante_stock/_delete_form.html.twig') }}
+{% endblock %}

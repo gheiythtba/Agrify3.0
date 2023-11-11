@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}StockDivers index{% endblock %}
+
+{% block body %}
+    <h1>StockDivers index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>NomSD</th>
+                <th>QuantiteSD</th>
+                <th>Health</th>
+                <th>DateEntreeStock</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for stock_diver in stock_divers %}
+            <tr>
+                <td>{{ stock_diver.id }}</td>
+                <td>{{ stock_diver.nomSD }}</td>
+                <td>{{ stock_diver.quantiteSD }}</td>
+                <td>{{ stock_diver.health }}</td>
+                <td>{{ stock_diver.dateEntreeStock ? stock_diver.dateEntreeStock|date('Y-m-d') : '' }}</td>
+                <td>
+                    <a href="{{ path('app_stock_divers_show', {'id': stock_diver.id}) }}">show</a>
+                    <a href="{{ path('app_stock_divers_edit', {'id': stock_diver.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_stock_divers_new') }}">Create new</a>
+{% endblock %}

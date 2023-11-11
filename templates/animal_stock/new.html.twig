@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New AnimalStock{% endblock %}
+
+{% block body %}
+    <h1>Create new AnimalStock</h1>
+
+    {{ include('animal_stock/_form.html.twig') }}
+
+    <a href="{{ path('app_animal_stock_index') }}">back to list</a>
+{% endblock %}
