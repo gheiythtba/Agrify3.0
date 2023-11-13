@@ -12,11 +12,29 @@ class StockDiversType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('nomSD')
+            ->add('nomSD',  ChoiceType::class, [
+                'choices' => [
+                    'Miel' => 'Miel',
+                    'Lait' => 'Lait',
+                    'Oeufs' => 'Oeufs',
+                    'Cire' => 'Cire',
+                    'Laine' => 'Laine',
+                    'Peau' => 'Peau',
+                    'Fumier' => 'Fumier',
+                    'Déchet végétal' => 'Déchet végétal',
+                ],
+            ])
             ->add('quantiteSD')
-            ->add('health')
+            ->add('health' , ChoiceType::class, [
+                'choices' => [
+                    'Sain' => 'Sain',
+                    'Malsain' => 'Malsain',
+                ],
+            ])
             ->add('dateEntreeStock')
             ->add('vente')
+            ->add('save', SubmitType::class)
+
         ;
     }
 

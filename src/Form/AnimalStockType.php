@@ -13,12 +13,23 @@ class AnimalStockType extends AbstractType
     {
         $builder
             ->add('nomAnimal')
-            ->add('sexeAnimal')
+            ->add('sexeAnimal',ChoiceType::class, [
+                'choices' => [
+                    'M' => 'M',
+                    'F' => 'F',
+                ],
+            ])
             ->add('ageAnimal')
             ->add('poidsAnimal')
-            ->add('health')
+            ->add('health' , ChoiceType::class, [
+                'choices' => [
+                    'Sain' => 'Sain',
+                    'Malsain' => 'Malsain',
+                ],
+            ])
             ->add('dateEntreeStock')
             ->add('vente')
+            ->add('save', SubmitType::class)
         ;
     }
 

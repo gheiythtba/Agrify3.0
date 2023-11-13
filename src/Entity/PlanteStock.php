@@ -20,6 +20,9 @@ class PlanteStock
     #[ORM\Column(length: 255)]
     private ?string $etatPlante = null;
 
+    #[ORM\Column(length: 255)]
+    private ?string $health = null;
+
     #[ORM\Column]
     private ?float $quantitePlante = null;
 
@@ -54,6 +57,18 @@ class PlanteStock
     public function setEtatPlante(string $etatPlante): static
     {
         $this->etatPlante = $etatPlante;
+
+        return $this;
+    }
+
+    public function getHealth(): ?string
+    {
+        return $this->health;
+    }
+
+    public function setHealth(string $health): static
+    {
+        $this->health = $health;
 
         return $this;
     }

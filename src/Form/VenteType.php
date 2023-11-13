@@ -13,6 +13,8 @@ class VenteType extends AbstractType
     {
         $builder
             ->add('prix')
+            ->add('save', SubmitType::class)
+
         ;
     }
 
