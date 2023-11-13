@@ -6,6 +6,8 @@ use App\Entity\StockDivers;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 class StockDiversType extends AbstractType
 {
@@ -33,7 +35,7 @@ class StockDiversType extends AbstractType
             ])
             ->add('dateEntreeStock')
             ->add('vente')
-            ->add('save', SubmitType::class)
+            ->add('save', SubmitType::class) 
 
         ;
     }
