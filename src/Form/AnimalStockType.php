@@ -29,6 +29,8 @@ class AnimalStockType extends AbstractType
             ])
             ->add('dateEntreeStock')
             ->add('vente')
+            ->add('save', SubmitType::class)
+
         ;
     }
 
