@@ -32,6 +32,9 @@ class PlanteStock
     #[ORM\ManyToOne(inversedBy: 'planteStock')]
     private ?Vente $vente = null;
 
+    #[ORM\Column]
+    private ?float $prix =null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -105,6 +108,34 @@ class PlanteStock
     public function setVente(?Vente $vente): static
     {
         $this->vente = $vente;
+
+        return $this;
+    }
+
+    public function getPrix(): ?float
+    {
+        return $this->prix;
+    }
+
+    public function setPrix(float $prix): static
+    {
+        $this->prix = $prix;
+
+        return $this;
+    }
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $image = null;
+
+
+    public function getImage(): ?string
+    {
+        return $this->image;
+    }
+
+    public function setImage(?string $image): static
+    {
+        $this->image = $image;
 
         return $this;
     }

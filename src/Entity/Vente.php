@@ -25,7 +25,7 @@ class Vente
     private Collection $stockDivers;
 
     #[ORM\Column]
-    private ?float $prix = null;
+    private ?float $prixTotal = null;
 
     public function __construct()
     {
@@ -60,7 +60,6 @@ class Vente
     public function removeAnimalStock(AnimalStock $animalStock): static
     {
         if ($this->animalStock->removeElement($animalStock)) {
-            // set the owning side to null (unless already changed)
             if ($animalStock->getVente() === $this) {
                 $animalStock->setVente(null);
             }
@@ -107,7 +106,7 @@ class Vente
         return $this->stockDivers;
     }
 
-    public function addStockDiver(StockDivers $stockDiver): static
+    public function addStockDivers(StockDivers $stockDiver): static
     {
         if (!$this->stockDivers->contains($stockDiver)) {
             $this->stockDivers->add($stockDiver);
@@ -120,7 +119,6 @@ class Vente
     public function removeStockDiver(StockDivers $stockDiver): static
     {
         if ($this->stockDivers->removeElement($stockDiver)) {
-            // set the owning side to null (unless already changed)
             if ($stockDiver->getVente() === $this) {
                 $stockDiver->setVente(null);
             }
@@ -129,15 +127,16 @@ class Vente
         return $this;
     }
 
-    public function getPrix(): ?float
+    public function getPrixTotal(): ?float
     {
-        return $this->prix;
+        return $this->prixTotal;
     }
 
-    public function setPrix(float $prix): static
+    public function setPrixTotal(float $prixTotal): static
     {
-        $this->prix = $prix;
+        $this->prixTotal = $prixTotal;
 
         return $this;
     }
+
 }

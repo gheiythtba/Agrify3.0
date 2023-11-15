@@ -5,7 +5,7 @@
 {% block body %}
     <h1>AnimalStock</h1>
 
-    <table class="table">
+    <table class="table" , border=1>
         <tbody>
             <tr>
                 <th>Id</th>
@@ -34,6 +34,10 @@
             <tr>
                 <th>DateEntreeStock</th>
                 <td>{{ animal_stock.dateEntreeStock ? animal_stock.dateEntreeStock|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Prix</th>
+                <td>{{ animal_stock.prix }}</td>
             </tr>
         </tbody>
     </table>

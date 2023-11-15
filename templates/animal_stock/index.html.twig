@@ -5,7 +5,7 @@
 {% block body %}
     <h1>AnimalStock index</h1>
 
-    <table class="table">
+    <table class="table" ,border=1>
         <thead>
             <tr>
                 <th>Id</th>
@@ -15,6 +15,7 @@
                 <th>PoidsAnimal</th>
                 <th>Health</th>
                 <th>DateEntreeStock</th>
+                <th>Prix</th>
                 <th>actions</th>
             </tr>
         </thead>
@@ -28,6 +29,7 @@
                 <td>{{ animal_stock.poidsAnimal }}</td>
                 <td>{{ animal_stock.health }}</td>
                 <td>{{ animal_stock.dateEntreeStock ? animal_stock.dateEntreeStock|date('Y-m-d') : '' }}</td>
+                <td>{{ animal_stock.prix }}</td>
                 <td>
                     <a href="{{ path('app_animal_stock_show', {'id': animal_stock.id}) }}">show</a>
                     <a href="{{ path('app_animal_stock_edit', {'id': animal_stock.id}) }}">edit</a>
