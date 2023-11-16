@@ -1,9 +1,9 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Animalshop details{% endblock %}
+{% block title %}Animal détails{% endblock %}
 
 {% block body %}
-    <h1>AnimalShop details</h1>
+    <h1>Animal détails</h1>
 
     <table class="table" , border=1>
         <tbody>
@@ -46,7 +46,7 @@
         </tbody>
     </table>
 
-        <a href="{{ path('app_vente_animal_stock', {'id': animal_stock.id}) }}">Vendre cet animal</a>
+        <a href="{{  path('app_vente_new') }}">Vendre cet animal</a>
         <a href="{{ path('app_animal_stock_index') }}">Retour</a>
         <a href="{{ path('app_animal_stock_edit', {'id': animal_stock.id}) }}">Modifier</a>
 

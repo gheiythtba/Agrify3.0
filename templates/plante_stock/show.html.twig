@@ -1,9 +1,9 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}PlanteStock details{% endblock %}
+{% block title %}PlanteStock détails{% endblock %}
 
 {% block body %}
-    <h1>PlanteStock details</h1>
+    <h1>PlanteStock détails</h1>
 
     <table class="table" , border=1>
         <tbody>
@@ -42,7 +42,7 @@
         </tbody>
     </table>
 
-        <a href="#">Vendre cette plante</a>
+        <a href="{{ path('app_vente_new') }}">Vendre cette plante</a>
         <a href="{{ path('app_plante_stock_index') }}">Retour</a>
         <a href="{{ path('app_plante_stock_edit', {'id': plante_stock.id}) }}">Modifier</a>
 

@@ -17,6 +17,20 @@ class Vente
     #[ORM\Column]
     private ?int $id = null;
 
+    #[ORM\Column(length: 255)]
+    private ?string $category = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $nom = null;
+
+    #[ORM\Column]
+    private ?float $quantiteV = null;
+    #[ORM\Column]
+    private ?float $prixTotal = null;
+
+    #[ORM\Column(type: Types::DATE_MUTABLE)]
+    private ?\DateTimeInterface $dateVente = null;
+
     #[ORM\OneToMany(mappedBy: 'vente', targetEntity: AnimalStock::class)]
     private Collection $animalStock;
 
@@ -26,13 +40,7 @@ class Vente
     #[ORM\OneToMany(mappedBy: 'vente', targetEntity: StockDivers::class)]
     private Collection $stockDivers;
 
-    #[ORM\Column]
-    private ?float $quantiteV = null;
-    #[ORM\Column]
-    private ?float $prixTotal = null;
-
-    #[ORM\Column(type: Types::DATE_MUTABLE)]
-    private ?\DateTimeInterface $dateVente = null;
+    
 
     public function __construct()
     {
@@ -44,6 +52,27 @@ class Vente
     public function getId(): ?int
     {
         return $this->id;
+    }
+    public function getCategory(): ?string
+    {
+        return $this->category;
+    }
+
+    public function setCategory(string $category): static
+    {
+        $this->category = $category;
+        return $this;
+    }
+
+    public function getNom(): ?string
+    {
+        return $this->nom;
+    }
+
+    public function setNom(string $nom): static
+    {
+        $this->nom = $nom;
+        return $this;
     }
 
     /**

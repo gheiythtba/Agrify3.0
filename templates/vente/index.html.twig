@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Vente {% endblock %}
+{% block title %} Vente {% endblock %}
 {% block stylesheets %}
     {{ parent() }}
     <style>
@@ -64,13 +64,17 @@
 {% endblock %}
 
 {% block body %}
-    <h1>Vente </h1>
+    <h1> Vente </h1>
 <div class="tab-container">
     <table class="table">
         <thead>
             <tr>
                 <th>Id</th>
+                <th>Cathégorie</th>
+                <th>Nom</th>
+                <th>Quantité à vendre</th>
                 <th>Prix Total</th>
+                <th>Date Vente</th>
                 <th>Actions</th>
             </tr>
         </thead>
@@ -78,8 +82,12 @@
         {% for vente in ventes %}
             <tr>
                 <td>{{ vente.id }}</td>
+                <td>{{ vente.category }}</td>
+                <td>{{ vente.nom }}</td>
+                <td>{{ vente.quantiteV}}</td>
                 <td>{{ vente.prixTotal }}</td>
-                <td>{{ vente.prixTotal }}</td>
+                <td>{{ vente.dateVente  ? vente.dateVente|date('Y-m-d') : '' }}</td>
+
                 <td>
                     <a href="{{ path('app_vente_show', {'id': vente.id}) }}">Show</a>
                     <a href="{{ path('app_vente_edit', {'id': vente.id}) }}">Modifier</a>

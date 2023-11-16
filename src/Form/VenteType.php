@@ -13,6 +13,8 @@ use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+
 
 
 
@@ -23,42 +25,22 @@ class VenteType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-        ->add('animalStock', CollectionType::class, [
-            'entry_type' => AnimalStockType::class,
-            'allow_add' => true,
-            'by_reference' => false,
-            'label' => 'Animals',
+        ->add('category' , ChoiceType::class, [
+            'label' => 'Cathégorie',
+            'choices' => [
+                'StockAniaml' => 'SaStockAniamlin',
+                'StockPlante' => 'StockPlante',
+                'StockDivers' => 'StockDivers',
+            ],
         ])
-        ->add('planteStock', CollectionType::class, [
-            'entry_type' => PlanteStockType::class,
-            'allow_add' => true,
-            'by_reference' => false,
-            'label' => 'Plants',
-        ])
-        ->add('stockDivers', CollectionType::class, [
-            'entry_type' => StockDiversType::class,
-            'allow_add' => true,
-            'by_reference' => false,
-            'label' => 'Other Stocks',
-        ])
+        ->add('nom') 
+      
         ->add('quantiteV', TextType::class, [
             'label' => 'Quantité',
         ])
        
-        ->add('prixTotal', MoneyType::class, [
-            'label' => 'Total Price',
-            'mapped' => false, // This field is not mapped to any entity property
-            'attr' => [
-                'readonly' => true,
-            ],
-        ])
-        ->add('dateVente', DateType::class, [
-            'label' => 'Sale Date',
-            'widget' => 'single_text',
-            'format' => 'yyyy-MM-dd',
-            'html5' => false,
-        ])
-        // Add other fields as needed
+        ->add('prixTotal')
+        ->add('dateVente')
     ;
 }
 
