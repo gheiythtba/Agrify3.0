@@ -1,13 +1,85 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Edit AnimalStock{% endblock %}
+{% block title %}Modifier AnimalStock{% endblock %}
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        /* Add custom styles for PlanteStock form page */
+        .form-container {
+            width: 80%;
+            margin: 20px auto;
+            background-color: #fff;
+            padding: 20px;
+            border: 1px solid #2E5D42;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #2E5D42;
+        }
+
+        .form-group {
+            display: flex;
+            margin-bottom: 16px;
+        }
+
+        .form-group select {
+            flex: 1;
+            margin-right: 8px;
+            padding: 8px;
+            border: 1px solid #2E5D42;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        input {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 16px;
+            border: 1px solid #2E5D42;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        button {
+            background-color: #2E5D42;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #F2F0D5;
+            color: #2E5D42;
+        }
+
+        .back-link {
+            display: block;
+            margin-top: 20px;
+            color: #2E5D42;
+            text-decoration: none;
+        }
+
+        .back-link:hover {
+            color: #F2F0D5;
+        }
+    </style>
+{% endblock %}
 
 {% block body %}
-    <h1>Edit AnimalStock</h1>
+<div class="form-container">
 
-    {{ include('animal_stock/_form.html.twig', {'button_label': 'Update'}) }}
+    <h1>Modifier AnimalStock</h1>
 
-    <a href="{{ path('app_animal_stock_index') }}">back to list</a>
+    {{ include('animal_stock/_form.html.twig', {'button_label': 'Modifier'}) }}
+
+    <a href="{{ path('app_animal_stock_index') }}">Retour</a>
 
     {{ include('animal_stock/_delete_form.html.twig') }}
+   </div> 
 {% endblock %}

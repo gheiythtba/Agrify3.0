@@ -1,9 +1,71 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}PlanteStock index{% endblock %}
+{% block title %}PlanteStock {% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        /* Add custom styles for AnimalStock index page */
+         <style>
+        /* Add custom styles for AnimalStock index page */
+        body {
+            font-family: 'Open Sans', sans-serif;
+            background-color: #F2F2F2;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        h1 {
+            color: #2E5D42;
+        }
+
+        .table-container {
+            width: 80%;
+            margin-top: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            border: 1px solid #2E5D42;
+            padding: 10px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #2E5D42;
+            color: #fff;
+        }
+
+        tr:nth-child(even) {
+            background-color: #fff;
+        }
+
+        tr:nth-child(odd) {
+            background-color: #F2F2F2;
+        }
+
+        a {
+            color: #2E5D42;
+            text-decoration: none;
+            margin-right: 10px;
+        }
+
+        a:hover {
+            color: #F2F0D5;
+        }
+    </style>
+{% endblock %}
 
 {% block body %}
-    <h1>PlanteStock index</h1>
+    <h1>PlanteStock </h1>
 
     <table class="table">
         <thead>
@@ -13,7 +75,7 @@
                 <th>EtatPlante</th>
                 <th>QuantitePlante</th>
                 <th>DateEntreeStock</th>
-                <th>actions</th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -25,17 +87,17 @@
                 <td>{{ plante_stock.quantitePlante }}</td>
                 <td>{{ plante_stock.dateEntreeStock ? plante_stock.dateEntreeStock|date('Y-m-d') : '' }}</td>
                 <td>
-                    <a href="{{ path('app_plante_stock_show', {'id': plante_stock.id}) }}">show</a>
-                    <a href="{{ path('app_plante_stock_edit', {'id': plante_stock.id}) }}">edit</a>
+                    <a href="{{ path('app_plante_stock_show', {'id': plante_stock.id}) }}">Détails</a>
+                    <a href="{{ path('app_plante_stock_edit', {'id': plante_stock.id}) }}">Modifier</a>
                 </td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="6">no records found</td>
+                <td colspan="6">Acune Plante Stockée</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
-    <a href="{{ path('app_plante_stock_new') }}">Create new</a>
+    <a href="{{ path('app_plante_stock_new') }}">Ajouter</a>
 {% endblock %}

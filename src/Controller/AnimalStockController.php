@@ -78,4 +78,24 @@ class AnimalStockController extends AbstractController
 
         return $this->redirectToRoute('app_animal_stock_index', [], Response::HTTP_SEE_OTHER);
     }
+
+    #[Route('/shop', name: 'app_animal_stock_shop', methods: ['GET'])]
+    public function showshop(AnimalStockRepository $animalStockRepository): Response
+    {
+        $animalStocks = $animalStockRepository->findAll();
+
+        return $this->render('animal_stock/shop_animal.html.twig', [
+            'animal_stocks' => $animalStocks,
+        ]);
+    }
+
+
+
+    #[Route('/{id}/shopdetails', name: 'app_animal_stock_shopdetails', methods: ['GET'], requirements: ['id' => '\d+'])]
+    public function showshopdetails(AnimalStock $animalStock): Response
+    {
+        return $this->render('animal_stock/shop_animal_details.html.twig', [
+            'animal_stock' => $animalStock,
+        ]);
+    }
 }

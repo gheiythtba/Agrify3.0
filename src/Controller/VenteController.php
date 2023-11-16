@@ -3,6 +3,10 @@
 namespace App\Controller;
 
 use App\Entity\Vente;
+use App\Entity\AnimalStock;
+use App\Entity\PlanteStockStock;
+use App\Entity\StockDivers;
+
 use App\Form\VenteType;
 use App\Repository\VenteRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -78,4 +82,7 @@ class VenteController extends AbstractController
 
         return $this->redirectToRoute('app_vente_index', [], Response::HTTP_SEE_OTHER);
     }
+
+    
+
 }

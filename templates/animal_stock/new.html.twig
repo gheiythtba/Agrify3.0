@@ -1,11 +1,71 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}New AnimalStock{% endblock %}
+{% block title %}Ajouter Animal au Stock{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        /* Add custom styles for PlanteStock form page */
+        .form-container {
+            width: 80%;
+            margin: 20px auto;
+            background-color: #fff;
+            padding: 20px;
+            border: 1px solid #2E5D42;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #2E5D42;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 16px;
+            border: 1px solid #2E5D42;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        button {
+            background-color: #2E5D42;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #F2F0D5;
+            color: #2E5D42;
+        }
+
+        .back-link {
+            display: block;
+            margin-top: 20px;
+            color: #2E5D42;
+            text-decoration: none;
+        }
+
+        .back-link:hover {
+            color: #F2F0D5;
+        }
+    </style>
+{% endblock %}
+
 
 {% block body %}
-    <h1>Create new AnimalStock</h1>
+<div class="form-container">
+
+    <h1>Ajouter Animal au Stock</h1>
 
     {{ include('animal_stock/_form.html.twig') }}
 
-    <a href="{{ path('app_animal_stock_index') }}">back to list</a>
+    <a href="{{ path('app_animal_stock_index') }}">Retour</a>
+    </div>
 {% endblock %}

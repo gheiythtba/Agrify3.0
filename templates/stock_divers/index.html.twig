@@ -1,9 +1,71 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}StockDivers index{% endblock %}
+{% block title %}StockDivers{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        /* Add custom styles for AnimalStock index page */
+         <style>
+        /* Add custom styles for AnimalStock index page */
+        body {
+            font-family: 'Open Sans', sans-serif;
+            background-color: #F2F2F2;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        h1 {
+            color: #2E5D42;
+        }
+
+        .table-container {
+            width: 80%;
+            margin-top: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            border: 1px solid #2E5D42;
+            padding: 10px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #2E5D42;
+            color: #fff;
+        }
+
+        tr:nth-child(even) {
+            background-color: #fff;
+        }
+
+        tr:nth-child(odd) {
+            background-color: #F2F2F2;
+        }
+
+        a {
+            color: #2E5D42;
+            text-decoration: none;
+            margin-right: 10px;
+        }
+
+        a:hover {
+            color: #F2F0D5;
+        }
+    </style>
+{% endblock %}
 
 {% block body %}
-    <h1>StockDivers index</h1>
+    <h1>StockDivers</h1>
 
     <table class="table">
         <thead>
@@ -13,7 +75,7 @@
                 <th>QuantiteSD</th>
                 <th>Health</th>
                 <th>DateEntreeStock</th>
-                <th>actions</th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -25,17 +87,17 @@
                 <td>{{ stock_diver.health }}</td>
                 <td>{{ stock_diver.dateEntreeStock ? stock_diver.dateEntreeStock|date('Y-m-d') : '' }}</td>
                 <td>
-                    <a href="{{ path('app_stock_divers_show', {'id': stock_diver.id}) }}">show</a>
-                    <a href="{{ path('app_stock_divers_edit', {'id': stock_diver.id}) }}">edit</a>
+                    <a href="{{ path('app_stock_divers_show', {'id': stock_diver.id}) }}">Détails</a>
+                    <a href="{{ path('app_stock_divers_edit', {'id': stock_diver.id}) }}">Modifier</a>
                 </td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="6">no records found</td>
+                <td colspan="6">Aucun Stock divers stocké</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
-    <a href="{{ path('app_stock_divers_new') }}">Create new</a>
+    <a href="{{ path('app_stock_divers_new') }}">Ajouter</a>
 {% endblock %}

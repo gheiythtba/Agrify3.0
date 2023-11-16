@@ -1,19 +1,50 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
-        {# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
-        {% block stylesheets %}
-            {{ encore_entry_link_tags('app') }}
-        {% endblock %}
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Agrify!{% endblock %}</title>
 
-        {% block javascripts %}
-            {{ encore_entry_script_tags('app') }}
-        {% endblock %}
-    </head>
-    <body>
-        {% block body %}{% endblock %}
-    </body>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
+    {% block stylesheets %}
+        <link rel="preconnect" href="{{asset('https://fonts.googleapis.com')}}">
+        <link rel="preconnect" href="{{asset('https://fonts.gstatic.com')}}" crossorigin>
+        <link href="{{asset('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&display=swap')}}" rel="stylesheet">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap" rel="stylesheet">
+        <link href="{{asset('Back/CSS/Menu.css')}}" rel="stylesheet">
+    {% endblock %}
+    
+</head>
+<body>
+        <nav class="menu">
+
+
+                    <div class="classynav">
+                        <ul>
+                            <li><a href="#">Home</a></li>
+                            <li><a href="#">User</a></li>
+                            <li><a href="#">Field</a></li>
+                            <li><a href="#">Presence</a></li>
+                            <li><a href="#">Material</a></li>
+                            
+                            <li><a href="{{ path('app_animal_stock_index') }}">Stock animal</a></li>
+                            <li><a href="{{ path('app_plante_stock_index') }}">Stock plante</a></li>
+                            <li><a href="{{ path('app_stock_divers_index') }}">Stock divers</a></li>
+                            <li><a href="#">Taches</a></li>
+                            <li><a href="#">Reclamation</a></li>
+                            <li><a href="#">Logout</a></li>
+                        </ul>
+                    </div>
+              
+ </nav>
+
+          {% block body %}
+
+            {% endblock %}
+        </div>
+    </div>
+</div>
+
+</body>
 </html>

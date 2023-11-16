@@ -1,35 +1,98 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Vente index{% endblock %}
+{% block title %}Vente {% endblock %}
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        /* Add custom styles for AnimalStock index page */
+         <style>
+        /* Add custom styles for AnimalStock index page */
+        body {
+            font-family: 'Open Sans', sans-serif;
+            background-color: #F2F2F2;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        h1 {
+            color: #2E5D42;
+        }
+
+        .table-container {
+            width: 80%;
+            margin-top: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            border: 1px solid #2E5D42;
+            padding: 10px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #2E5D42;
+            color: #fff;
+        }
+
+        tr:nth-child(even) {
+            background-color: #fff;
+        }
+
+        tr:nth-child(odd) {
+            background-color: #F2F2F2;
+        }
+
+        a {
+            color: #2E5D42;
+            text-decoration: none;
+            margin-right: 10px;
+        }
+
+        a:hover {
+            color: #F2F0D5;
+        }
+    </style>
+{% endblock %}
 
 {% block body %}
-    <h1>Vente index</h1>
-
+    <h1>Vente </h1>
+<div class="tab-container">
     <table class="table">
         <thead>
             <tr>
                 <th>Id</th>
-                <th>Prix</th>
-                <th>actions</th>
+                <th>Prix Total</th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
         {% for vente in ventes %}
             <tr>
                 <td>{{ vente.id }}</td>
-                <td>{{ vente.prix }}</td>
+                <td>{{ vente.prixTotal }}</td>
+                <td>{{ vente.prixTotal }}</td>
                 <td>
-                    <a href="{{ path('app_vente_show', {'id': vente.id}) }}">show</a>
-                    <a href="{{ path('app_vente_edit', {'id': vente.id}) }}">edit</a>
+                    <a href="{{ path('app_vente_show', {'id': vente.id}) }}">Show</a>
+                    <a href="{{ path('app_vente_edit', {'id': vente.id}) }}">Modifier</a>
                 </td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="3">no records found</td>
+                <td colspan="3">Aucune vente effectuée</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
+   </div> 
 
-    <a href="{{ path('app_vente_new') }}">Create new</a>
+    <a href="{{ path('app_vente_new') }}">Ajouter</a>
 {% endblock %}

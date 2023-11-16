@@ -5,6 +5,8 @@ namespace App\Entity;
 use App\Repository\VenteRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
+
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: VenteRepository::class)]
@@ -25,7 +27,12 @@ class Vente
     private Collection $stockDivers;
 
     #[ORM\Column]
+    private ?float $quantiteV = null;
+    #[ORM\Column]
     private ?float $prixTotal = null;
+
+    #[ORM\Column(type: Types::DATE_MUTABLE)]
+    private ?\DateTimeInterface $dateVente = null;
 
     public function __construct()
     {
@@ -60,6 +67,7 @@ class Vente
     public function removeAnimalStock(AnimalStock $animalStock): static
     {
         if ($this->animalStock->removeElement($animalStock)) {
+            // set the owning side to null (unless already changed)
             if ($animalStock->getVente() === $this) {
                 $animalStock->setVente(null);
             }
@@ -106,7 +114,7 @@ class Vente
         return $this->stockDivers;
     }
 
-    public function addStockDivers(StockDivers $stockDiver): static
+    public function addStockDiver(StockDivers $stockDiver): static
     {
         if (!$this->stockDivers->contains($stockDiver)) {
             $this->stockDivers->add($stockDiver);
@@ -119,10 +127,23 @@ class Vente
     public function removeStockDiver(StockDivers $stockDiver): static
     {
         if ($this->stockDivers->removeElement($stockDiver)) {
+            // set the owning side to null (unless already changed)
             if ($stockDiver->getVente() === $this) {
                 $stockDiver->setVente(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getQuantiteV(): ?float
+    {
+        return $this->quantiteV;
+    }
+
+    public function setQuantiteV(float $quantiteV): static
+    {
+        $this->quantiteV = $quantiteV;
 
         return $this;
     }
@@ -135,6 +156,18 @@ class Vente
     public function setPrixTotal(float $prixTotal): static
     {
         $this->prixTotal = $prixTotal;
+
+        return $this;
+    }
+
+    public function getDateVente(): ?\DateTimeInterface
+    {
+        return $this->dateVente;
+    }
+
+    public function setDateVente(\DateTimeInterface $dateVente): static
+    {
+        $this->dateVente = $dateVente;
 
         return $this;
     }
