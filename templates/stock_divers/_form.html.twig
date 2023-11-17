@@ -1,4 +1,42 @@
-{{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Ajouter') }}</button>
+{{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+<div>
+    
+    <div>
+        {{ form_label(form.nomSD) }}
+        {{ form_widget(form.nomSD) }}
+        <span class="error">{{ form_errors(form.nomSD) }}</span>
+    </div>
+
+    <div>
+        {{ form_label(form.quantiteSD) }}
+        {{ form_widget(form.quantiteSD) }}
+        <span class="error">{{ form_errors(form.quantiteSD) }}</span>
+    </div>
+
+    <div>
+        {{ form_label(form.health) }}
+        {{ form_widget(form.health) }}
+        <span class="error">{{ form_errors(form.health) }}</span>
+    </div>
+
+    <div>
+        {{ form_label(form.dateEntreeStock) }}
+        {{ form_widget(form.dateEntreeStock) }}
+        <span class="error">{{ form_errors(form.dateEntreeStock) }}</span>
+    </div>
+
+    <div>
+        {{ form_label(form.prix) }}
+        {{ form_widget(form.prix) }}
+        <span class="error">{{ form_errors(form.prix) }}</span>
+    </div>
+
+    <div>
+        {{ form_label(form.image) }}
+        {{ form_widget(form.image) }}
+        <span class="error">{{ form_errors(form.image) }}</span>
+    </div>
+</div>
+
+<button class="btn">{{ button_label|default('Ajouter') }}</button>
 {{ form_end(form) }}

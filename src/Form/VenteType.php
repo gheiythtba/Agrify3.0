@@ -14,6 +14,10 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use App\Repository\AnimalStockRepository;
+
+
 
 
 
@@ -25,6 +29,7 @@ class VenteType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
+
         ->add('category' , ChoiceType::class, [
             'label' => 'Cathégorie',
             'choices' => [
@@ -33,8 +38,20 @@ class VenteType extends AbstractType
                 'StockDivers' => 'StockDivers',
             ],
         ])
-        ->add('nom') 
-      
+
+        ->add('nom', EntityType::class, [
+            'label' => 'Nom',
+            'class' => AnimalStock::class, 
+            'choice_label' => 'nomAnimal', 
+            'query_builder' => function (AnimalStockRepository $repository) {
+                return $repository->createQueryBuilder('a')
+                    ->orderBy('a.nomAnimal', 'ASC'); 
+            },
+            'multiple' => false, 
+            'expanded' => false, 
+        ])
+
+        
         ->add('quantiteV', TextType::class, [
             'label' => 'Quantité',
         ])

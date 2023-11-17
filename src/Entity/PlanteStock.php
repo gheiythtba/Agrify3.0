@@ -5,6 +5,8 @@ namespace App\Entity;
 use App\Repository\PlanteStockRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 #[ORM\Entity(repositoryClass: PlanteStockRepository::class)]
 class PlanteStock
@@ -15,6 +17,7 @@ class PlanteStock
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message :"Le nom de la plante ne peut pas être vide.")]
     private ?string $nomPlante = null;
 
     #[ORM\Column(length: 255)]
@@ -24,6 +27,8 @@ class PlanteStock
     private ?string $health = null;
 
     #[ORM\Column]
+    #[Assert\NotBlank(message :"La quantité de la plante ne peut pas être vide.")]
+    #[Assert\Range(min: 0, notInRangeMessage: "La quantité ne doit pas être négative")]
     private ?float $quantitePlante = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
@@ -33,6 +38,8 @@ class PlanteStock
     private ?Vente $vente = null;
 
     #[ORM\Column]
+    #[Assert\NotBlank(message: "Le prix ne peut pas être vide.")]
+    #[Assert\Range(min: 0.01, notInRangeMessage: "Le prix doit être supérieur à {{ min }}.")]
     private ?float $prix =null;
 
     public function getId(): ?int

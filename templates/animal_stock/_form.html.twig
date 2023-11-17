@@ -1,4 +1,54 @@
-{{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Ajouter') }}</button>
+{{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+<div>
+    
+    <div>
+        {{ form_label(form.nomAnimal) }}
+        {{ form_widget(form.nomAnimal) }}
+        <span class="error">{{ form_errors(form.nomAnimal) }}</span>
+    </div>
+
+    <div>
+        {{ form_label(form.sexeAnimal) }}
+        {{ form_widget(form.sexeAnimal) }}
+        <span class="error">{{ form_errors(form.sexeAnimal) }}</span>
+    </div>
+
+    <div>
+        {{ form_label(form.ageAnimal) }}
+        {{ form_widget(form.ageAnimal) }}
+        <span class="error">{{ form_errors(form.ageAnimal)}}</span>
+    </div>
+
+    <div>
+        {{ form_label(form.poidsAnimal) }}
+        {{ form_widget(form.poidsAnimal) }}
+        <span class="error">{{ form_errors(form.poidsAnimal)  }}</span>
+    </div>
+
+    <div>
+        {{ form_label(form.health) }}
+        {{ form_widget(form.health) }}
+        <span class="error">{{ form_errors(form.health)}}</span>
+    </div>
+
+    <div>
+        {{ form_label(form.dateEntreeStock) }}
+        {{ form_widget(form.dateEntreeStock) }}
+        <span class="error">{{ form_errors(form.dateEntreeStock) }}</span>
+    </div>
+
+    <div>
+        {{ form_label(form.image) }}
+        {{ form_widget(form.image) }}
+        <span class="error">{{ form_errors(form.image)  }}</span>
+    </div>
+
+    <div>
+        {{ form_label(form.prix) }}
+        {{ form_widget(form.prix) }}
+        <span class="error">{{ form_errors(form.prix) }}</span>
+    </div>
+</div>
+
+<button class="btn">{{ button_label|default('Ajouter') }}</button>
 {{ form_end(form) }}

@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Vente;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Query\Expr\Select;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -45,4 +46,11 @@ class VenteRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
+
+public function showventeAnimalform(){
+    $qb=$this->createQueryBuilder('vente');
+    $qb->select('vente.id', 'animal_stock.nom_animal', 'animal_stock.prix AS prixUnitaire','vente.quantite_v','vente.prix_total','vente.date_vente')
+       ->innerJoin(AnimalStock::class, 'animal_stock', 'WITH', 'animal_stock = vente.nom');
+    return $qb->getQuery()->getResult();   
+}
 }

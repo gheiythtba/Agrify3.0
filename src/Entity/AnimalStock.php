@@ -5,6 +5,8 @@ namespace App\Entity;
 use App\Repository\AnimalStockRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 #[ORM\Entity(repositoryClass: AnimalStockRepository::class)]
 class AnimalStock
@@ -15,15 +17,21 @@ class AnimalStock
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message :"Le nom de l'animal ne peut pas être vide.")]
     private ?string $nomAnimal = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message :"Le sexe de l'animal ne peut pas être vide.")]
     private ?string $sexeAnimal = null;
 
     #[ORM\Column]
+    #[Assert\NotBlank(message: "L'âge de l'animal ne peut pas être vide.")]
+    #[Assert\Range(min: 0, max: 100, notInRangeMessage: "L'âge doit être compris entre {{ min }} et {{ max }} ans.")]
     private ?int $ageAnimal = null;
 
     #[ORM\Column]
+    #[Assert\NotBlank(message: "Le poids de l'animal ne peut pas être vide.")]
+    #[Assert\Range(min: 0.1, max: 1000, notInRangeMessage: "Le poids doit être compris entre {{ min }} et {{ max }} kg.")]
     private ?float $poidsAnimal = null;
 
     #[ORM\Column(length: 255)]
@@ -36,6 +44,8 @@ class AnimalStock
     private ?Vente $vente = null;
 
     #[ORM\Column]
+    #[Assert\NotBlank(message: "Le prix ne peut pas être vide.")]
+    #[Assert\Range(min: 0.01, notInRangeMessage: "Le prix doit être supérieur à {{ min }}.")]
     private ?float $prix =null;
     
 

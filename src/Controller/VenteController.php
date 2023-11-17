@@ -9,6 +9,11 @@ use App\Entity\StockDivers;
 
 use App\Form\VenteType;
 use App\Repository\VenteRepository;
+use App\Repository\AnimalStockRepository;
+use App\Repository\PlanteStockRepository;
+use App\Repository\StockDiversRepository;
+
+
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -27,8 +32,9 @@ class VenteController extends AbstractController
     }
 
     #[Route('/new', name: 'app_vente_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
+    public function new(Request $request, EntityManagerInterface $entityManager, AnimalStockRepository $animalStockRepository): Response
     {
+            
         $vente = new Vente();
         $form = $this->createForm(VenteType::class, $vente);
         $form->handleRequest($request);

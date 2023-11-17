@@ -5,6 +5,8 @@ namespace App\Entity;
 use App\Repository\StockDiversRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 #[ORM\Entity(repositoryClass: StockDiversRepository::class)]
 class StockDivers
@@ -15,9 +17,12 @@ class StockDivers
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message :"Le nom ne peut pas être vide.")]
     private ?string $nomSD = null;
 
     #[ORM\Column]
+    #[Assert\NotBlank(message :"La quantité ne peut pas être vide.")]
+    #[Assert\Range(min: 0, notInRangeMessage: "La quantité ne doit pas être négative")]
     private ?float $quantiteSD = null;
 
     #[ORM\Column(length: 255)]
@@ -30,6 +35,8 @@ class StockDivers
     private ?Vente $vente = null;
 
     #[ORM\Column]
+    #[Assert\NotBlank(message: "Le prix ne peut pas être vide.")]
+    #[Assert\Range(min: 0.01, notInRangeMessage: "Le prix doit être supérieur à {{ min }}.")]
     private ?float $prix =null;
 
     public function getId(): ?int
