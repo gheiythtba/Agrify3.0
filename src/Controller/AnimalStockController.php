@@ -10,6 +10,10 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route; 
+use App\Service\PdfService;
+use Symfony\Component\HttpFoundation\ResponseHeaderBag;
+
+
 
 #[Route('/animal/stock')]
 class AnimalStockController extends AbstractController
@@ -21,6 +25,29 @@ class AnimalStockController extends AbstractController
             'animal_stocks' => $animalStockRepository->findAll(),
         ]);
     }
+
+    #[Route('/pdf', name: 'app_animal_stock.pdf')]
+    public function generatePdfAnimalStock(AnimalStock $animalStock = null, PdfService $pdf, AnimalStockRepository $animalStockRepository) {
+    $html = $this->renderView('animal_stock/index.html.twig', [
+        'animal_stocks' => $animalStockRepository->findAll(),
+    ]);
+
+    // Définissez le chemin du fichier temporaire pour le PDF
+    $outputFile = tempnam(sys_get_temp_dir(), 'Listes').'.pdf';
+
+    // Générez le PDF et récupérez le chemin du fichier généré
+    $pdfFilePath = $pdf->generatePdfFile($html, $outputFile);
+
+    // Renommez le fichier pour inclure une extension .pdf
+    $pdfFileName = pathinfo($pdfFilePath, PATHINFO_FILENAME).'.pdf';
+    $pdfFileNameWithPath = sys_get_temp_dir().'/'.$pdfFileName;
+    rename($pdfFilePath, $pdfFileNameWithPath);
+
+    // Renvoyez le fichier en tant que réponse pour le téléchargement
+    return $this->file($pdfFileNameWithPath, 'Listes.pdf', ResponseHeaderBag::DISPOSITION_INLINE);
+}
+
+    
 
     #[Route('/new', name: 'app_animal_stock_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
