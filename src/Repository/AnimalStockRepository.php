@@ -6,6 +6,7 @@ use App\Entity\AnimalStock;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
+
 /**
  * @extends ServiceEntityRepository<AnimalStock>
  *
@@ -45,4 +46,17 @@ class AnimalStockRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
+
+
+// src/Repository/AnimalStockRepository.php
+
+
+    public function findAllWithSelectedColumns()
+    {
+        return $this->createQueryBuilder('a')
+            ->select('a.id', 'a.nomAnimal', 'a.sexeAnimal', 'a.ageAnimal', 'a.poidsAnimal', 'a.health', 'a.dateEntreeStock', 'a.prix')
+            ->getQuery()
+            ->getResult();
+    }
+
 }

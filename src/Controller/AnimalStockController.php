@@ -28,23 +28,21 @@ class AnimalStockController extends AbstractController
 
     #[Route('/pdf', name: 'app_animal_stock.pdf')]
     public function generatePdfAnimalStock(AnimalStock $animalStock = null, PdfService $pdf, AnimalStockRepository $animalStockRepository) {
-    $html = $this->renderView('animal_stock/index.html.twig', [
-        'animal_stocks' => $animalStockRepository->findAll(),
-    ]);
+        $animalStocks = $animalStockRepository->findAllWithSelectedColumns();
 
-    // Définissez le chemin du fichier temporaire pour le PDF
-    $outputFile = tempnam(sys_get_temp_dir(), 'Listes').'.pdf';
+        $html = $this->renderView('animal_stock/pdf_template.html.twig', [
+            'animal_stocks' => $animalStocks,
+        ]);
 
-    // Générez le PDF et récupérez le chemin du fichier généré
-    $pdfFilePath = $pdf->generatePdfFile($html, $outputFile);
+        $outputFile = tempnam(sys_get_temp_dir(), 'Listes').'.pdf';
 
-    // Renommez le fichier pour inclure une extension .pdf
-    $pdfFileName = pathinfo($pdfFilePath, PATHINFO_FILENAME).'.pdf';
-    $pdfFileNameWithPath = sys_get_temp_dir().'/'.$pdfFileName;
-    rename($pdfFilePath, $pdfFileNameWithPath);
+        $pdfFilePath = $pdf->generatePdfFile($html, $outputFile);
 
-    // Renvoyez le fichier en tant que réponse pour le téléchargement
-    return $this->file($pdfFileNameWithPath, 'Listes.pdf', ResponseHeaderBag::DISPOSITION_INLINE);
+        $pdfFileName = pathinfo($pdfFilePath, PATHINFO_FILENAME).'.pdf';
+        $pdfFileNameWithPath = sys_get_temp_dir().'/'.$pdfFileName;
+        rename($pdfFilePath, $pdfFileNameWithPath);
+
+         return $this->file($pdfFileNameWithPath, 'Listes.pdf', ResponseHeaderBag::DISPOSITION_INLINE);
 }
 
     
