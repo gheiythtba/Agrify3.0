@@ -59,4 +59,41 @@ class AnimalStockRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+
+    public function rechercheAvancee(array $crit): array
+    {
+        $qb = $this->createQueryBuilder('a');
+
+        //en fonction de santé
+        if (isset($crit['health'])) {
+            $qb->andWhere('a.health = :health')
+                ->setParameter('health', $crit['health']);
+        }
+
+        // en fct du nom de l'animal
+        if (isset($crit['nomAnimal'])) {
+            $qb->andWhere('a.nomAnimal = :nomAnimal')
+                ->setParameter('nomAnimal', '%' . $crit['nomAnimal'] . '%');
+        }
+
+        return $qb->getQuery()->getResult();
+    }
+
+    public function getStockEvolutionData()
+{
+    $result = $this->createQueryBuilder('a')
+        ->select("SUBSTRING(a.dateEntreeStock, 1, 10) as date, COUNT(a.id) as stock")
+        ->groupBy('date')
+        ->orderBy('date')
+        ->getQuery()
+        ->getResult();
+
+    $formattedData = [];
+
+    foreach ($result as $entry) {
+        $formattedData[] = [$entry['date'], (int) $entry['stock']];
+    }
+
+    return $formattedData;
+}
 }

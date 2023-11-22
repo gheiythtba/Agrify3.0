@@ -11,7 +11,10 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route; 
 use App\Service\PdfService;
+use App\Service\AnimalHealthService;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
+use Symfony\UX\Chartjs\Builder\ChartBuilderInterface;
+use Symfony\UX\Chartjs\Model\Chart;
 
 
 
@@ -44,6 +47,27 @@ class AnimalStockController extends AbstractController
 
          return $this->file($pdfFileNameWithPath, 'Listes.pdf', ResponseHeaderBag::DISPOSITION_INLINE);
 }
+
+    #[Route('/recherche', name: 'app_animal_stock_recherche', methods: ['GET'])]
+    public function rechercheAvancee(Request $request, AnimalStockRepository $animalStockRepository): Response
+    {
+        $crit= $request->query->all(); 
+
+        $resultats = $animalStockRepository->rechercheAvancee($crit);
+
+        return $this->render('animal_stock/index.html.twig', [
+            'resultats' => $resultats,
+        ]);
+    }
+    #[Route('/stockevolution', name: 'app_animal_stock_evolution', methods: ['GET'])]
+    public function stockEvolution(AnimalStockRepository $animalStockRepository): Response
+    {
+        $stockEvolutionData = $animalStockRepository->getStockEvolutionData();
+
+        return $this->render('animal_stock/stats.html.twig', [
+            'stockEvolutionData' => json_encode($stockEvolutionData),
+        ]);
+    }
 
     
 
@@ -104,23 +128,4 @@ class AnimalStockController extends AbstractController
         return $this->redirectToRoute('app_animal_stock_index', [], Response::HTTP_SEE_OTHER);
     }
 
-    #[Route('/shop', name: 'app_animal_stock_shop', methods: ['GET'])]
-    public function showshop(AnimalStockRepository $animalStockRepository): Response
-    {
-        $animalStocks = $animalStockRepository->findAll();
-
-        return $this->render('animal_stock/shop_animal.html.twig', [
-            'animal_stocks' => $animalStocks,
-        ]);
-    }
-
-
-
-    #[Route('/{id}/shopdetails', name: 'app_animal_stock_shopdetails', methods: ['GET'], requirements: ['id' => '\d+'])]
-    public function showshopdetails(AnimalStock $animalStock): Response
-    {
-        return $this->render('animal_stock/shop_animal_details.html.twig', [
-            'animal_stock' => $animalStock,
-        ]);
-    }
 }
