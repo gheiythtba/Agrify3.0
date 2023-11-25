@@ -3,7 +3,7 @@
 {% block title %}Stock Evolution{% endblock %}
 
 {% block body %}
-    <h1>Stock Evolution</h1>
+    <h1>Evolution du Stock</h1>
 
     <div id="stock-evolution-chart" style="width: 100%; height: 300px;"></div>
 
@@ -21,7 +21,7 @@
             data.addRows(jsonData);
 
             var options = {
-                title: 'Stock Evolution by Date',
+                title: "Evolution du stock par Date d'entrée au stock",
                 curveType: 'function',
                 legend: {position: 'bottom'},
             };
