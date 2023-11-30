@@ -11,10 +11,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route; 
 use App\Service\PdfService;
-use App\Service\AnimalHealthService;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
-use Symfony\UX\Chartjs\Builder\ChartBuilderInterface;
-use Symfony\UX\Chartjs\Model\Chart;
+
 
 
 
@@ -46,19 +44,8 @@ class AnimalStockController extends AbstractController
         rename($pdfFilePath, $pdfFileNameWithPath);
 
          return $this->file($pdfFileNameWithPath, 'Listes.pdf', ResponseHeaderBag::DISPOSITION_INLINE);
-}
-
-    #[Route('/recherche', name: 'app_animal_stock_recherche', methods: ['GET'])]
-    public function rechercheAvancee(Request $request, AnimalStockRepository $animalStockRepository): Response
-    {
-        $crit= $request->query->all(); 
-
-        $resultats = $animalStockRepository->rechercheAvancee($crit);
-
-        return $this->render('animal_stock/index.html.twig', [
-            'resultats' => $resultats,
-        ]);
     }
+
     #[Route('/stockevolution', name: 'app_animal_stock_evolution', methods: ['GET'])]
     public function stockEvolution(AnimalStockRepository $animalStockRepository): Response
     {

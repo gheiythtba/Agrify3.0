@@ -45,4 +45,29 @@ class PlanteStockRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
+
+public function findAllWithSelectedColumns()
+    {
+        return $this->createQueryBuilder('p')
+            ->select('p.id', 'p.nomPlante', 'p.etatPlante', 'p.quantitePlante', 'p.health', 'p.dateEntreeStock', 'p.prix')
+            ->getQuery()
+            ->getResult();
+    }
+    public function getStockEvolutionData()
+{
+    $result = $this->createQueryBuilder('p')
+        ->select("SUBSTRING(p.dateEntreeStock, 1, 10) as date, COUNT(p.id) as stock")
+        ->groupBy('date')
+        ->orderBy('date')
+        ->getQuery()
+        ->getResult();
+
+    $formattedData = [];
+
+    foreach ($result as $entry) {
+        $formattedData[] = [$entry['date'], (int) $entry['stock']];
+    }
+
+    return $formattedData;
+}
 }

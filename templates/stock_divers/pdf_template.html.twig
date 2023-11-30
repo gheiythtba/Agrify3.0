@@ -1,13 +1,8 @@
-{% extends 'base.html.twig' %}
-
 {% block title %}StockDivers{% endblock %}
 
 {% block stylesheets %}
-    {{ parent() }}
     <style>
-        /* Add custom styles for AnimalStock index page */
          <style>
-        /* Add custom styles for AnimalStock index page */
         body {
             font-family: 'Open Sans', sans-serif;
             background-color: #F2F2F2;
@@ -75,7 +70,6 @@
                 <th>QuantiteSD</th>
                 <th>Health</th>
                 <th>DateEntreeStock</th>
-                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -86,10 +80,7 @@
                 <td>{{ stock_diver.quantiteSD }}</td>
                 <td>{{ stock_diver.health }}</td>
                 <td>{{ stock_diver.dateEntreeStock ? stock_diver.dateEntreeStock|date('Y-m-d') : '' }}</td>
-                <td>
-                    <a href="{{ path('app_stock_divers_show', {'id': stock_diver.id}) }}">Détails</a>
-                    <a href="{{ path('app_stock_divers_edit', {'id': stock_diver.id}) }}">Modifier</a>
-                </td>
+                
             </tr>
         {% else %}
             <tr>
@@ -98,9 +89,4 @@
         {% endfor %}
         </tbody>
     </table>
-
-    <a href="{{ path('app_stock_divers_new') }}">Ajouter</a> <br>
-    <a href="{{ path('app_stock_divers.pdf') }}">Exporter PDF</a> <br>
-    <a href="{{ path('app_stock_divers_evolution') }}"> Voir statistiques</a><br>
-
 {% endblock %}

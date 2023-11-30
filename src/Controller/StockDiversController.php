@@ -10,6 +10,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route; 
+use App\Service\PdfService;
+use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 
 #[Route('/stock/divers')]
 class StockDiversController extends AbstractController
@@ -21,6 +23,36 @@ class StockDiversController extends AbstractController
             'stock_divers' => $stockDiversRepository->findAll(),
         ]);
     }
+
+    #[Route('/pdf', name: 'app_stock_divers.pdf')]
+    public function generatePdfStockDivers(StockDivers $stockDivers = null, PdfService $pdf, StockDiversRepository $stockDiversRepository) {
+        $stockDivers = $stockDiversRepository->findAllWithSelectedColumns();
+
+        $html = $this->renderView('stock_divers/pdf_template.html.twig', [
+            'stock_divers' => $stockDivers,
+        ]);
+
+        $outputFile = tempnam(sys_get_temp_dir(), 'Listessd').'.pdf';
+
+        $pdfFilePath = $pdf->generatePdfFile($html, $outputFile);
+
+        $pdfFileName = pathinfo($pdfFilePath, PATHINFO_FILENAME).'.pdf';
+        $pdfFileNameWithPath = sys_get_temp_dir().'/'.$pdfFileName;
+        rename($pdfFilePath, $pdfFileNameWithPath);
+
+         return $this->file($pdfFileNameWithPath, 'Listessd.pdf', ResponseHeaderBag::DISPOSITION_INLINE);
+}
+
+#[Route('/stockevolution', name: 'app_stock_divers_evolution', methods: ['GET'])]
+    public function stockEvolution(StockDiversRepository $stockDiversRepository): Response
+    {
+        $stockEvolutionData = $stockDiversRepository->getStockEvolutionData();
+
+        return $this->render('plante_stock/stats.html.twig', [
+            'stockEvolutionData' => json_encode($stockEvolutionData),
+        ]);
+    }
+
 
     #[Route('/new', name: 'app_stock_divers_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response

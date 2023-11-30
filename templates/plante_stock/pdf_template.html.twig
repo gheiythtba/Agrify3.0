@@ -1,6 +1,4 @@
-{% extends 'base.html.twig' %}
-
-{% block title %}AnimalStock{% endblock %}
+{% block title %}PlanteStock {% endblock %}
 
 {% block stylesheets %}
     {{ parent() }}
@@ -64,50 +62,36 @@
     </style>
 {% endblock %}
 
-
 {% block body %}
-    <h1> AnimalStock</h1>
+    <h1>PlanteStock </h1>
 
-    <table class="table m" ,border=1>
+    <table class="table">
         <thead>
             <tr>
                 <th>Id</th>
-                <th>NomAnimal</th>
-                <th>SexeAnimal</th>
-                <th>AgeAnimal</th>
-                <th>PoidsAnimal</th>
+                <th>NomPlante</th>
+                <th>EtatPlante</th>
+                <th>QuantitePlante</th>
                 <th>Health</th>
                 <th>DateEntreeStock</th>
-                <th>Prix</th>
-                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
-        {% for animal_stock in animal_stocks %}
+        {% for plante_stock in plante_stocks %}
             <tr>
-                <td>{{ animal_stock.id }}</td>
-                <td>{{ animal_stock.nomAnimal }}</td>
-                <td>{{ animal_stock.sexeAnimal }}</td>
-                <td>{{ animal_stock.ageAnimal }}</td>
-                <td>{{ animal_stock.poidsAnimal }}</td>
-                <td>{{ animal_stock.health }}</td>
-                <td>{{ animal_stock.dateEntreeStock ? animal_stock.dateEntreeStock|date('Y-m-d') : '' }}</td>
-                <td>{{ animal_stock.prix }}</td>
-                <td>
-                    <a href="{{ path('app_animal_stock_show', {'id': animal_stock.id}) }}">Détails</a>
-                    <a href="{{ path('app_animal_stock_edit', {'id': animal_stock.id}) }}">Modifier</a>
-                </td>
+                <td>{{ plante_stock.id }}</td>
+                <td>{{ plante_stock.nomPlante }}</td>
+                <td>{{ plante_stock.etatPlante }}</td>
+                <td>{{ plante_stock.quantitePlante }}</td>
+                <td>{{ plante_stock.health }}</td>
+                <td>{{ plante_stock.dateEntreeStock ? plante_stock.dateEntreeStock|date('Y-m-d') : '' }}</td>
+               
             </tr>
         {% else %}
             <tr>
-                <td colspan="8">Aucun Animal stocké</td>
+                <td colspan="6">Aucune Plante Stockée</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
-<br>
-<br>
-    <a href="{{ path('app_animal_stock_new') }}"> Ajouter</a> <br>
-    <a href="{{ path('app_animal_stock.pdf') }}"> Exporter PDF</a> <br>
-    <a href="{{ path('app_animal_stock_evolution') }}"> Voir statistiques</a><br>
 {% endblock %}

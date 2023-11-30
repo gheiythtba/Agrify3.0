@@ -45,4 +45,30 @@ class StockDiversRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
+
+public function findAllWithSelectedColumns()
+    {
+        return $this->createQueryBuilder('d')
+            ->select('d.id', 'd.nomSD','d.quantiteSD', 'd.health', 'd.dateEntreeStock', 'd.prix')
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function getStockEvolutionData()
+{
+    $result = $this->createQueryBuilder('d')
+        ->select("SUBSTRING(d.dateEntreeStock, 1, 10) as date, COUNT(d.id) as stock")
+        ->groupBy('date')
+        ->orderBy('date')
+        ->getQuery()
+        ->getResult();
+
+    $formattedData = [];
+
+    foreach ($result as $entry) {
+        $formattedData[] = [$entry['date'], (int) $entry['stock']];
+    }
+
+    return $formattedData;
+}
 }

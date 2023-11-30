@@ -74,6 +74,7 @@
                 <th>NomPlante</th>
                 <th>EtatPlante</th>
                 <th>QuantitePlante</th>
+                <th>Health</th>
                 <th>DateEntreeStock</th>
                 <th>Actions</th>
             </tr>
@@ -85,6 +86,7 @@
                 <td>{{ plante_stock.nomPlante }}</td>
                 <td>{{ plante_stock.etatPlante }}</td>
                 <td>{{ plante_stock.quantitePlante }}</td>
+                <td>{{ plante_stock.health }}</td>
                 <td>{{ plante_stock.dateEntreeStock ? plante_stock.dateEntreeStock|date('Y-m-d') : '' }}</td>
                 <td>
                     <a href="{{ path('app_plante_stock_show', {'id': plante_stock.id}) }}">Détails</a>
@@ -99,5 +101,8 @@
         </tbody>
     </table>
 
-    <a href="{{ path('app_plante_stock_new') }}">Ajouter</a>
+    <a href="{{ path('app_plante_stock_new') }}">Ajouter</a> <br>
+    <a href="{{ path('app_plante_stock.pdf') }}"> Exporter PDF</a><br>
+    <a href="{{ path('app_plante_stock_evolution') }}"> Voir statistiques</a><br>
+
 {% endblock %}
