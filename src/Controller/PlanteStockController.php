@@ -12,15 +12,26 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route; 
 use App\Service\PdfService;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
+use Knp\Component\Pager\PaginatorInterface;
+
 
 #[Route('/plante/stock')]
 class PlanteStockController extends AbstractController
 {
     #[Route('/', name: 'app_plante_stock_index', methods: ['GET'])]
-    public function index(PlanteStockRepository $planteStockRepository): Response
+        public function index(PlanteStockRepository $planteStockRepository, PaginatorInterface $paginator, Request $request): Response
     {
+        $query = $planteStockRepository->createQueryBuilder('p')
+            ->getQuery();
+
+        $pagination = $paginator->paginate(
+            $query, /* query NOT result */
+            $request->query->getInt('page', 1), /*page number*/
+            2 /*limit per page*/
+        );
+
         return $this->render('plante_stock/index.html.twig', [
-            'plante_stocks' => $planteStockRepository->findAll(),
+            'plante_stocks' => $pagination,
         ]);
     }
 
@@ -42,17 +53,17 @@ class PlanteStockController extends AbstractController
         rename($pdfFilePath, $pdfFileNameWithPath);
 
          return $this->file($pdfFileNameWithPath, 'Listesps.pdf', ResponseHeaderBag::DISPOSITION_INLINE);
-}
-
-#[Route('/stockevolution', name: 'app_plante_stock_evolution', methods: ['GET'])]
-    public function stockEvolution(PlanteStockRepository $planteStockRepository): Response
-    {
-        $stockEvolutionData = $planteStockRepository->getStockEvolutionData();
-
-        return $this->render('plante_stock/stats.html.twig', [
-            'stockEvolutionData' => json_encode($stockEvolutionData),
-        ]);
     }
+
+    #[Route('/stockevolution', name: 'app_plante_stock_evolution', methods: ['GET'])]
+        public function stockEvolution(PlanteStockRepository $planteStockRepository): Response
+        {
+            $stockEvolutionData = $planteStockRepository->getStockEvolutionData();
+
+            return $this->render('plante_stock/stats.html.twig', [
+                'stockEvolutionData' => json_encode($stockEvolutionData),
+            ]);
+        }
 
 
     #[Route('/new', name: 'app_plante_stock_new', methods: ['GET', 'POST'])]

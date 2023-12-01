@@ -6,9 +6,16 @@ use App\Repository\AnimalStockRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use Symfony\Component\HttpFoundation\File\File;
+
+
 
 
 #[ORM\Entity(repositoryClass: AnimalStockRepository::class)]
+/**
+ * @Vich\Uploadable
+ */
 class AnimalStock
 {
     #[ORM\Id]
@@ -164,5 +171,29 @@ class AnimalStock
         $this->image = $image;
 
         return $this;
+    }
+    
+    /**
+     * @Vich\UploadableField(mapping="animal_image", fileNameProperty="image")
+     */
+    private ?File $imageFile = null;
+
+/**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private ?\DateTimeInterface $updatedAt = null;
+    public function getImageFile(): ?File
+    {
+        return $this->imageFile;
+    }
+
+    public function setImageFile(?File $imageFile): void
+    {
+        $this->imageFile = $imageFile;
+
+        if ($imageFile) {
+            // Il est nécessaire que le champ soit modifié pour déclencher l'upload
+            $this->updatedAt = new \DateTimeImmutable();
+        }
     }
 }

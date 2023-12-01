@@ -26,15 +26,36 @@ class AnimalStockController extends AbstractController
     #[Route('/', name: 'app_animal_stock_index', methods: ['GET'])]
     public function index(AnimalStockRepository $animalStockRepository, PaginatorInterface $paginator, Request $request): Response
 {
+    // Récupérez les critères de recherche depuis la requête
+    $nomAnimal = $request->query->get('nomAnimal');
+    $sexeAnimal = $request->query->get('sexeAnimal');
+
+    // Créez un tableau de critères à passer à la méthode de recherche
+    $criteria = [
+        'nomAnimal' => $nomAnimal,
+        'sexeAnimal' => $sexeAnimal,
+        // Ajoutez d'autres critères ici en fonction de vos besoins
+    ];
+
+    // Utilisez la méthode de recherche du repository avec les critères
+    $animalStocks = $animalStockRepository->filterAnimalStocks($criteria);
+
+    // Créez la requête pour la pagination avec les critères
     $query = $animalStockRepository->createQueryBuilder('a')
+        ->where('a.nomAnimal LIKE :nomAnimal')
+        ->setParameter('nomAnimal', '%' . $nomAnimal . '%')
+        ->andWhere('a.sexeAnimal = :sexeAnimal')
+        ->setParameter('sexeAnimal', $sexeAnimal)
         ->getQuery();
 
+    // Paginez les résultats avec la requête
     $pagination = $paginator->paginate(
         $query, /* query NOT result */
-        $request->query->getInt('page', 1), /*page number*/
-        2 /*limit per page*/
+        $request->query->getInt('page', 1), /* page number */
+        2 /* limit per page */
     );
 
+    // Passez les résultats paginés à la vue
     return $this->render('animal_stock/index.html.twig', [
         'animal_stocks' => $pagination,
     ]);

@@ -5,6 +5,7 @@
 {% block stylesheets %}
     {{ parent() }}
         <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+            <link rel="stylesheet" href="{{ asset('bundles/eonasdaneonasdan-bootstrap-paginator/css/bootstrap-paginator.min.css') }}">
 
     <style>
         /* Add custom styles for AnimalStock index page */
@@ -63,6 +64,66 @@
         a:hover {
             color: #F2F0D5;
         }
+        
+        /* Styles pour le paginator */
+.pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.pagination .pagination-list {
+    display: flex;
+    list-style: none;
+    padding: 0;
+}
+
+.pagination .pagination-item {
+    margin: 0 5px;
+}
+
+.pagination .pagination-link {
+    display: block;
+    padding: 8px 12px;
+    text-decoration: none;
+    color: #333;
+    background-color: #e0e0e0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.pagination .pagination-link:hover {
+    background-color: #ddd;
+}
+
+.pagination .pagination-item.active .pagination-link {
+    background-color: #2E5D42;
+    color: #fff;
+}
+
+/* Styles pour les flèches "Précédent" et "Suivant" */
+.pagination .pagination-prev,
+.pagination .pagination-next {
+    margin: 0 5px;
+}
+
+.pagination .pagination-prev,
+.pagination .pagination-next,
+.pagination .pagination-link {
+    cursor: pointer;
+}
+
+/* Style pour la flèche "Précédent" */
+.pagination .pagination-prev {
+    font-weight: bold;
+}
+
+/* Style pour la flèche "Suivant" */
+.pagination .pagination-next {
+    font-weight: bold;
+}
+
     </style>
 {% endblock %}
 
@@ -70,6 +131,18 @@
 {% block body %}
 
     <h1> AnimalStock</h1>
+     <form method="get" action="{{ path('app_animal_stock_index') }}">
+        <label for="nomAnimal">Nom de l'animal:</label>
+        <input type="text" id="nomAnimal" name="nomAnimal" value="{{ app.request.query.get('nomAnimal') }}">
+
+        <label for="sexeAnimal">Sexe de l'animal:</label>
+        <select id="sexeAnimal" name="sexeAnimal">
+            <option value="M" {% if app.request.query.get('sexeAnimal') == 'M' %}selected{% endif %}>M</option>
+            <option value="M" {% if app.request.query.get('sexeAnimal') == 'F' %}selected{% endif %}>F</option>
+        </select>
+
+        <button type="submit">Rechercher</button>
+    </form>
 
     <table class="table m" ,border=1>
         <thead>
