@@ -1,0 +1,25 @@
+{# templates/animal_stock/filter.html.twig #}
+
+{% extends 'base.html.twig' %}
+
+{% block title %}Recherche d'animal{% endblock %}
+
+{% block body %}
+    <h1>Recherche d'animal</h1>
+
+    {{ form_start(form) }}
+    {{ form_row(form.nomAnimal) }}
+    {{ form_row(form.sexeAnimal) }}
+    <button type="submit">Rechercher</button>
+    {{ form_end(form) }}
+
+    {# Afficher les résultats de la recherche #}
+    {% if filteredAnimalStocks is not empty %}
+        <h2>Résultats de la recherche</h2>
+        <ul>
+            {% for animalStock in filteredAnimalStocks %}
+                <li>{{ animalStock.nomAnimal }} ({{ animalStock.sexeAnimal }})</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+{% endblock %}

@@ -4,6 +4,8 @@
 
 {% block stylesheets %}
     {{ parent() }}
+        <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+
     <style>
         /* Add custom styles for AnimalStock index page */
          <style>
@@ -66,6 +68,7 @@
 
 
 {% block body %}
+
     <h1> AnimalStock</h1>
 
     <table class="table m" ,border=1>
@@ -106,8 +109,13 @@
         </tbody>
     </table>
 <br>
+<div class="pagination">
+    {{ knp_pagination_render(animal_stocks) }}
+</div>
 <br>
     <a href="{{ path('app_animal_stock_new') }}"> Ajouter</a> <br>
     <a href="{{ path('app_animal_stock.pdf') }}"> Exporter PDF</a> <br>
     <a href="{{ path('app_animal_stock_evolution') }}"> Voir statistiques</a><br>
+
+
 {% endblock %}

@@ -1,0 +1,21 @@
+{# animal_stock/animal_stocks_table.html.twig #}
+{% for animal_stock in animal_stocks %}
+    <tr>
+        <td>{{ animal_stock.id }}</td>
+        <td>{{ animal_stock.nomAnimal }}</td>
+        <td>{{ animal_stock.sexeAnimal }}</td>
+        <td>{{ animal_stock.ageAnimal }}</td>
+        <td>{{ animal_stock.poidsAnimal }}</td>
+        <td>{{ animal_stock.health }}</td>
+        <td>{{ animal_stock.dateEntreeStock ? animal_stock.dateEntreeStock|date('Y-m-d') : '' }}</td>
+        <td>{{ animal_stock.prix }}</td>
+        <td>
+            <a href="{{ path('app_animal_stock_show', {'id': animal_stock.id}) }}">Détails</a>
+            <a href="{{ path('app_animal_stock_edit', {'id': animal_stock.id}) }}">Modifier</a>
+        </td>
+    </tr>
+{% else %}
+    <tr>
+        <td colspan="8">Aucun Animal stocké</td>
+    </tr>
+{% endfor %}

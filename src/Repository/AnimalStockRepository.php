@@ -58,27 +58,7 @@ class AnimalStockRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
-
-
-    public function rechercheAvancee(array $crit): array
-    {
-        $qb = $this->createQueryBuilder('a');
-
-        //en fonction de santé
-        if (isset($crit['health'])) {
-            $qb->andWhere('a.health = :health')
-                ->setParameter('health', $crit['health']);
-        }
-
-        // en fct du nom de l'animal
-        if (isset($crit['nomAnimal'])) {
-            $qb->andWhere('a.nomAnimal = :nomAnimal')
-                ->setParameter('nomAnimal', '%' . $crit['nomAnimal'] . '%');
-        }
-
-        return $qb->getQuery()->getResult();
-    }
-
+ 
     public function getStockEvolutionData()
 {
     $result = $this->createQueryBuilder('a')
@@ -96,4 +76,37 @@ class AnimalStockRepository extends ServiceEntityRepository
 
     return $formattedData;
 }
+public function filterAnimalStocks(array $criteria): array
+    {
+        $queryBuilder = $this->createQueryBuilder('a');
+
+        if ($criteria['nomAnimal']) {
+            $queryBuilder->andWhere('a.nomAnimal LIKE :nomAnimal')
+                ->setParameter('nomAnimal', '%' . $criteria['nomAnimal'] . '%');
+        }
+
+        if ($criteria['sexeAnimal']) {
+            $queryBuilder->andWhere('a.sexeAnimal = :sexeAnimal')
+                ->setParameter('sexeAnimal', $criteria['sexeAnimal']);
+        }
+
+        $result = $queryBuilder->getQuery()->getResult();
+
+        return $result;
+    }
+
+    // src/Repository/AnimalStockRepository.php
+
+    public function findBySearchTerm(string $searchTerm): array
+    {
+        $queryBuilder = $this->createQueryBuilder('a');
+    
+        if ($searchTerm) {
+            $queryBuilder
+                ->andWhere('a.nomAnimal LIKE :searchTerm')
+                ->setParameter('searchTerm', '%' . $searchTerm . '%');
+        }
+    
+        return $queryBuilder->getQuery()->getResult();
+    }
 }
