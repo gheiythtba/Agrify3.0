@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20231207090925 extends AbstractMigration
+final class Version20231207123541 extends AbstractMigration
 {
     public function getDescription(): string
     {
@@ -34,6 +34,9 @@ final class Version20231207090925 extends AbstractMigration
         $this->addSql('DROP TABLE animal_batch');
         $this->addSql('DROP INDEX IDX_6AAB231F809303D ON animal');
         $this->addSql('ALTER TABLE animal ADD unit_animal VARCHAR(255) NOT NULL, DROP animalbatch_id');
+        $this->addSql('ALTER TABLE gestation ADD preparation_velage DATE NOT NULL, ADD velage_prevu DATE NOT NULL, DROP preparation_vêlage, DROP vêlage_prévu');
+        $this->addSql('ALTER TABLE presence CHANGE id_p id_p INT AUTO_INCREMENT NOT NULL');
+        $this->addSql('ALTER TABLE user CHANGE user_nom user_nom VARCHAR(100) NOT NULL, CHANGE user_prenom user_prenom VARCHAR(100) NOT NULL, CHANGE user_email user_email VARCHAR(100) NOT NULL, CHANGE user_telephone user_telephone VARCHAR(100) NOT NULL, CHANGE user_role user_role VARCHAR(100) NOT NULL, CHANGE user_genre user_genre VARCHAR(100) NOT NULL, CHANGE username username VARCHAR(100) NOT NULL, CHANGE password password VARCHAR(100) NOT NULL');
     }
 
     public function down(Schema $schema): void
@@ -51,7 +54,10 @@ final class Version20231207090925 extends AbstractMigration
         $this->addSql('DROP TABLE stock_divers');
         $this->addSql('DROP TABLE vente');
         $this->addSql('ALTER TABLE animal ADD animalbatch_id INT DEFAULT NULL, DROP unit_animal');
-        $this->addSql('ALTER TABLE animal ADD CONSTRAINT FK_6AAB231F809303D FOREIGN KEY (animalbatch_id) REFERENCES animal_batch (id) ON UPDATE NO ACTION ON DELETE NO ACTION');
+        $this->addSql('ALTER TABLE animal ADD CONSTRAINT FK_6AAB231F809303D FOREIGN KEY (animalbatch_id) REFERENCES animal_batch (id)');
         $this->addSql('CREATE INDEX IDX_6AAB231F809303D ON animal (animalbatch_id)');
+        $this->addSql('ALTER TABLE gestation ADD preparation_vêlage DATE NOT NULL, ADD vêlage_prévu DATE NOT NULL, DROP preparation_velage, DROP velage_prevu');
+        $this->addSql('ALTER TABLE presence CHANGE id_p id_p INT NOT NULL');
+        $this->addSql('ALTER TABLE user CHANGE user_nom user_nom VARCHAR(255) NOT NULL, CHANGE user_prenom user_prenom VARCHAR(255) NOT NULL, CHANGE user_email user_email VARCHAR(255) NOT NULL, CHANGE user_telephone user_telephone VARCHAR(255) NOT NULL, CHANGE user_role user_role VARCHAR(255) NOT NULL, CHANGE user_genre user_genre VARCHAR(255) NOT NULL, CHANGE username username VARCHAR(255) NOT NULL, CHANGE password password VARCHAR(255) NOT NULL');
     }
 }
