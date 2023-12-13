@@ -25,14 +25,15 @@ class AnimalRepository extends ServiceEntityRepository
      * @param string $species
      * @return Animal[] Returns an array of Animal objects
      */
-    public function findBySpecies(string $species): array
+    public function findBySpecies(string $keyword): array
     {
         return $this->createQueryBuilder('a')
-            ->andWhere('a.espece = :species')
-            ->setParameter('species', $species)
+            ->andWhere('a.espece LIKE :keyword OR a.sexe LIKE :keyword OR CAST(a.poids AS TEXT) LIKE :keyword OR a.age LIKE :keyword')
+            ->setParameter('keyword', "%$keyword%")
             ->getQuery()
             ->getResult();
     }
+    
 
     /**
      * @param string $sortDirection
