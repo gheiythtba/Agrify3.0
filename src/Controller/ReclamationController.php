@@ -13,7 +13,7 @@ use App\Repository\ReclamationRepository;
 use App\Service\Messageservice;
 use App\Service\pdfservice;
 use Doctrine\ORM\EntityManagerInterface;
-use Knp\Component\Pager\PaginatorInterface;
+
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -28,7 +28,7 @@ use Twig\Error\SyntaxError;
 class ReclamationController extends AbstractController
 {
     #[Route('/', name: 'app_reclamation_index', methods: ['GET'])]
-    public function index(Request $request,ReclamationRepository $reclamationRepository,PaginatorInterface $paginator): Response
+    public function index(Request $request,ReclamationRepository $reclamationRepository): Response
     {
 
         return $this->render('reclamation/index.html.twig', [
@@ -36,7 +36,7 @@ class ReclamationController extends AbstractController
         ]);
     }
     #[Route('/pdf', name: 'pdf')]
-    public function generatePdfRec( PdfService $pdf, ReclamationRepository $reclamationRepository) {
+    public function generatePdfRec(pdfService $pdf, ReclamationRepository $reclamationRepository) {
         $reclamation1 = $reclamationRepository->findAll();
 
         $html = $this->renderView('basepdf.html.twig', [
