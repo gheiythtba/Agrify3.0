@@ -1,0 +1,238 @@
+{{ form_start(form,{"attr":{'novalidate':"novalidate"}}) }}
+   <div class="row">
+        <div class="col-12 col-md-6">
+            <div class="form-group">
+                {{ 
+                    form_row(form.taskTitle, 
+                    { 'attr': {'class': 'form-control', 'placeholder': 'enter task title'} }) 
+                }}
+                
+            </div>
+            <div class="form-group">
+                {{ 
+                    form_row(form.creationDate, 
+                    { 'attr': {'class': 'form-control', 'placeholder': 'enter creation date'} }) 
+                }}
+            </div>
+            <div class="form-group">
+                {{ 
+                    form_row(form.deadline, { 'attr': {'class': 'form-control', 'placeholder': 'enter Deadline'} }) 
+                }}
+            </div>
+            <div class="form-group">
+                {{ 
+                    form_row(form.status, { 'attr': {'class': 'form-control', 'placeholder': 'enter status'} }) 
+                }}
+            </div>
+            <div class="form-group">
+                {{ 
+                    form_row(form.assignedChef, { 'attr': {'class': 'form-control', 'placeholder': 'enter status'} }) 
+                }}
+            </div>
+        </div>
+        <div class="col-12 col-md-6">
+            <div class="todoList">
+                <div class="actionBar">
+                    <h3>Todo list</h3>
+                    <button type="button" class="add_item_link btn addTodo" data-collection-holder-class="todos">+</button>
+                </div>
+                <ul 
+                class="todos" 
+                data-index="{{ form.todos|length > 0 ? form.todos|last.vars.name + 1 : 0 }}"
+                data-prototype="{{ form_widget(form.todos.vars.prototype)|e('html_attr') }}">
+                    {% for todo in form.todos %}
+                    <li>
+                    <div class="todoItemWrapper">
+                    <div>
+                      {{ 
+                        form_row(todo.todoDescription) 
+                      }}
+                    
+                    </div>
+
+                    <div>
+                      {{ 
+                        form_row(todo.severity) 
+                      }}
+                    </div>
+                                        
+                    <button class="todoCloseBtn">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+
+                    </div>
+                    </li>
+                    
+                    {% endfor %}
+                </ul>
+
+            </div>
+        </div>
+        
+
+
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+        </div>
+    </div>
+    <div class="errorContainer">
+        {% if not form.vars.valid %}
+            <ul>
+                {# Loop through every form item #}
+                {% for child in form.children %}
+                    {# Display the errors of the form item #}
+                    {%for error in child.vars.errors%}
+                        <li class="alert alert-danger">{{error.message}}</li>
+                    {%endfor%}
+                {%endfor%}
+            </ul>
+        {%endif%}
+    </div>
+
+    <div class="noPadding">
+        <button class="btn alazea-btn mt-15 taskPersistBtn">{{ button_label|default('Update') }}</button>
+    </div>
+{{ form_end(form) }}
+
+<script src={{asset('front/js/jquery/jquery-2.2.4.min.js')}}></script>
+
+<script>
+  $(document).ready(function() {
+      // you may need to change this code if you are not using Bootstrap Datepicker
+
+
+
+  const addTagFormDeleteLink = (item) => {
+    const removeFormButton = document.createElement('button');
+    removeFormButton.classList.add('todoCloseBtn');
+    removeFormButton.innerHTML = '<i class="fa-solid fa-xmark"></i>';
+
+    item.append(removeFormButton);
+
+    removeFormButton.addEventListener('click', (e) => {
+        e.preventDefault();
+        // remove the li for the tag form
+        item.remove();
+    });
+  }
+      
+
+      const addFormToCollection = (e) => {
+        console.log("this is executing")
+        const collectionHolder = document.querySelector('.' + e.currentTarget.dataset.collectionHolderClass);
+
+        const item = document.createElement('li');
+        item.classList.add('todoItemWrapper');
+        item.innerHTML = collectionHolder
+          .dataset
+          .prototype
+          .replace(
+            /__name__/g,
+            collectionHolder.dataset.index
+          );
+
+        collectionHolder.appendChild(item);
+
+        collectionHolder.dataset.index++;
+
+        addTagFormDeleteLink(item);
+
+      };
+
+      console.log("document ready")
+      document
+        .querySelectorAll('.add_item_link')
+        .forEach(btn => {
+            console.log("adding todo clicked")
+            btn.addEventListener("click", addFormToCollection)
+        });
+
+        
+  });
+
+  
+
+</script>
+<style>
+    .noPadding {
+        padding:0;
+    }
+
+    .todoList {
+        padding: 30px;
+        background: #c1c6db;
+        min-height: 300px;
+        border: 1px solid #000;
+        border-radius: 8px;
+    }
+
+    .todos {
+      list-style: none;
+      padding: 0;
+    }
+
+    .todos li {
+      background-color: #e8e8e8;
+      border-radius: 5px;
+      margin: 10px 0;
+      padding: 14px;
+    }
+    
+    .todos > li > div:first-child {
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .todos .rightContent {
+      display: flex;
+    }
+
+    .todoCloseBtn {
+      background: transparent;
+      border: none;
+      position: absolute;
+      transform: translate(0,-50%);
+      right: 10px;
+      top: 50%;
+
+    }
+
+
+    .todoItemWrapper {
+      position: relative;
+    }
+
+    .todoItemWrapper select {
+      margin-right: 32px;
+    }
+
+
+    .todoList .actionBar {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .todoList h3 {
+        color: #000 !important;
+    }
+
+    .todoList .addTodo {
+        background: #2f3038;
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        padding: 0;
+        color: #fff;
+    }
+
+    .taskPersistBtn {
+        width: 300px;
+        background: #2f3038;
+        color: #c1c6db;
+        box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+        margin-top: 15px;
+    }
+
+</style>
+

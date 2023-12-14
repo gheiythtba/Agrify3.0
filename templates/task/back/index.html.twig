@@ -1,0 +1,185 @@
+{% extends 'baseAdmin.html.twig' %}
+
+{% block title %}
+  Task index
+{% endblock %}
+
+{% block body %}
+  <div class="adminTaskPanel">
+
+    <div class="taskPanelHeader">
+        <div class="leftSection">
+            <h1>tasks</h1>
+            <a href="{{ path('app_task_new') }}" class="btn alazea-btn active taskAddRedirectBtn">
+                <i class="fa-solid fa-plus"></i>
+            </a>
+            
+            <a href="{{ path('app_task_export') }}">
+                <button class="btn exportBtn">
+                    <i class="fa-solid fa-file-arrow-down"></i>
+                    Export tasks
+                </button>
+            </a>
+            
+
+        </div>        
+
+    </div>
+
+    <div class="filterPanel">
+            <form method="GET" action="{{ path('app_task_index') }}">
+                {{ form_start(form) }}
+
+                <div class="form-group">
+                    {{ 
+                        form_row(form.searchTitle, 
+                        { 'attr': {'class': 'form-control searchInput', 'placeholder': 'Search ...'} }) 
+                    }}
+                    
+                </div>
+
+                <div class="filterRightSection">
+                    
+
+                    <div class="form-group">
+                        {{ 
+                            form_row(form.createdAfter, 
+                            { 'attr': {'class': 'form-control'} }) 
+                        }}
+                        
+                    </div>
+
+                    <div class="form-group">
+                        {{ 
+                            form_row(form.dueBefore, 
+                            { 'attr': {'class': 'form-control'} }) 
+                        }}
+                        
+                    </div>
+
+                    <button type="submit" class="applyFiltersBtn btn">Apply Filters</button>
+                </div>
+                {{ form_end(form) }}
+            </form>
+        </div>
+   
+    <table class="table">
+        <thead>
+            <tr>
+                 <th>Task Title</th>
+                <th>Creation date</th>
+                <th>Deadline</th>
+                <th>Status</th>
+                <th>show</th>
+                <th>edit</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for task in tasks %}
+            <tr>
+
+                <td>{{ task.taskTitle }}</td>
+                  <td>{{ task.creationDate ? task.creationDate|date('Y-m-d') : '' }}</td>
+                  <td>{{ task.deadline ? task.deadline|date('Y-m-d') : '' }}</td>
+                  <td>{{ task.status.value }}</td>
+                <td>
+                    <a href="{{ path('app_task_show', { 'id': task.id }) }}">show</a>
+                    </td>
+                    <td>
+                    <a href="{{ path('app_task_edit', { 'id': task.id }) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    
+    <style>
+
+        .adminTaskPanel .table {
+            margin-top: 20px;
+        }
+
+        .adminTaskPanel .table th {
+            background: #2f3038;
+            color: #c1c6db;
+        }
+
+        .adminTaskPanel .table td {
+            color: #2f3038;
+            border-bottom: 1px solid #b5b3b3;
+        }
+
+        .taskAddRedirectBtn {
+            color: #c1c6db !important;
+            background: #2f3038!important;
+            border-radius: 50%;
+            width: 30px;
+            height: 30pxss;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .taskPanelHeader {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .taskPanelHeader .leftSection {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .filterPanel {
+            margin-top: 80px;
+        }
+
+        .filterPanel form{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .filterPanel .form-group > div {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .filterPanel .form-group label {
+            text-wrap: nowrap;
+        }
+
+        .filterRightSection {
+            display: flex;
+            gap: 20px;
+
+        }
+
+        .searchInput {
+            width: 350px;
+        }
+
+
+        .applyFiltersBtn {
+            background: #2f3038;
+            color: #c1c6db;
+            border: none;
+            border-radius: 7px;
+        }
+
+        .exportBtn {
+            background-color: #2f3038;
+            color: #b5b3b3;
+            
+        }
+    </style>
+  
+{% endblock %}

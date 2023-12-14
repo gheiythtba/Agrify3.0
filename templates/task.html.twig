@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <meta charset="UTF-8">
+    <meta name="description" content="">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <title>{% block title %}Welcome!{% endblock %}</title>
+        <!-- Favicon -->
+    <link rel="icon" href="{{asset('front/img/core-img/faviconlogo.ico')}}">
+
+    <!-- Core Stylesheet -->
+    <link rel="stylesheet" href={{asset('front/style.css')}}>
+    </head>
+    <body>
+    <!-- Preloader -->
+    <div class="preloader d-flex align-items-center justify-content-center">
+        <div class="preloader-circle"  style="background-color : #8ef05d ;"></div>
+        <div class="preloader-img" >
+            <img src={{asset('front/img/core-img/agrifylogo.png')}} alt="">
+        </div>
+    </div>
+         <!-- ##### Header Area Start ##### -->
+    <header class="header-area">
+
+            <!-- ***** Navbar Area ***** -->
+        <div class="alazea-main-menu">
+            <div class="classy-nav-container breakpoint-off">
+                <div class="container">
+                    <!-- Menu -->
+                    <nav class="classy-navbar justify-content-between" id="alazeaNav">
+
+                        <!-- Nav Brand -->
+                        <a href={{asset('#')}} class="nav-brand"><img src={{asset('front/img/core-img/agrifylogo.png')}} alt="" height=30% width=30% ></a>
+
+                        <!-- Navbar Toggler -->
+                        <div class="classy-navbar-toggler">
+                            <span class="navbarToggler"><span></span><span></span><span></span></span>
+                        </div>
+
+                        <!-- Menu -->
+                        <div class="classy-menu">
+
+                            <!-- Close Button -->
+                            <div class="classycloseIcon">
+                                <div class="cross-wrap"><span class="top"></span><span class="bottom"></span></div>
+                            </div>
+
+                            <!-- Navbar Start -->
+                            <div class="classynav">
+                                <ul>
+                                    <li><a href="{{path('app_AdminDashboard_index')}}">Home</a></li>
+                                    <li><a href="{{path('app_user_index')}}">User</a></li>
+                                    <li><a href="{{path('app_field_index')}}"> Field</a></li>
+                                    <li><a href="{{path('app_presence_index')}}">Presence</a></li>
+                                  
+                                    <li><a href="{{path('app_task_index')}}"> Taches</a>
+                                     <ul class="dropdown">
+                                            <li><a href="{{path('app_task_index')}}">taches</a></li>
+                                            <li><a href="#">todo</a></li>
+                                        </ul>
+                                        </li>
+
+                                    <li><a href="{{path('app_logout')}}">Logout</a></li>
+                                </ul>
+ 
+                          
+                            </div>
+                            <!-- Navbar End -->
+                        </div>
+                    </nav>
+
+                    <!-- Search Form -->
+                    <div class="search-form">
+                        <form action="#" method="get">
+                            <input type="search" name="search" id="search" placeholder="Type keywords &amp; press enter...">
+                            <button type="submit" class="d-none"></button>
+                        </form>
+                        <!-- Close Icon -->
+                        <div class="closeIcon"><i class="fa fa-times" aria-hidden="true"></i></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+
+        {% block task %}
+    <!-- ##### Breadcrumb Area Start ##### -->
+    <div class="breadcrumb-area">
+        <!-- Top Breadcrumb Area -->
+<div class="top-breadcrumb-area bg-img bg-overlay d-flex align-items-center justify-content-center" style="background-image: url('{{ asset('front/img/bg/task3.jpg') }}');">
+        <h2>TACHES</h2>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="app_AdminDashboard_index"><i class="fa fa-home"></i> Home</a></li>
+                            <li class="breadcrumb-item"><a href="#">task</a></li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- ##### Breadcrumb Area End ##### -->
+    
+    {% endblock %}
+<!-- ##### Testimonial Area Start ##### -->
+    <section class="testimonial-area section-padding-50">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    
+                    {% block body %}
+                    {% endblock %}
+                    
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ##### About Area Start ##### -->
+    <section class="about-us-area margin-top-50">
+        <div class="container">
+            <div class="row justify-content-between">
+                <div class="col-12 col-lg-5">
+                    <!-- Section Heading -->
+                    <div class="section-heading">
+                        <h2>Task management Insights</h2>
+                        <p>Cette page vous permet de gérer et de mettre à jour les taches dans notre système. Que vous ayez besoin d'ajouter une nouvelle tache ou de modifier des détails existants.</p>
+                    </div>
+        <p>Les fonctionnalités clés de cette page comprennent :</p>
+        <ul>
+            <li>Ajouter de nouveaux taches à la base de données</li>
+            <li>Mettre à jour et modifier les informations des taches existants</li>
+            <li>Consulter une liste complète de tous les taches enregistrés</li>
+        </ul>                </div>
+
+                <div class="col-12 col-lg-6">
+                <div class="section-heading">
+                        <h2>"Les tâches</h2>
+                    </div>
+                    <div class="alazea-benefits-area">
+                    <!-- Progress Bar Content Area -->
+                    <div class="alazea-progress-bar mb-50">
+                        <!-- Single Progress Bar -->
+                        <div class="single_progress_bar">
+                            <p>urgente</p>
+                            <div id="bar1" class="barfiller">
+                                <div class="tipWrap">
+                                    <span class="tip"></span>
+                                </div>
+                                <span class="fill" data-percentage="20"></span>
+                            </div>
+                        </div>
+
+                        <!-- Single Progress Bar -->
+                        <div class="single_progress_bar">
+                            <p>done</p>
+                            <div id="bar2" class="barfiller">
+                                <div class="tipWrap">
+                                    <span class="tip"></span>
+                                </div>
+                                <span class="fill" data-percentage="30"></span>
+                            </div>
+                        </div>
+
+                        <!-- Single Progress Bar -->
+                        <div class="single_progress_bar">
+                            <p>In progress</p>
+                            <div id="bar3" class="barfiller">
+                                <div class="tipWrap">
+                                    <span class="tip"></span>
+                                </div>
+                                <span class="fill" data-percentage="30"></span>
+                            </div>
+                        </div>
+
+                        <!-- Single Progress Bar -->
+                        <div class="single_progress_bar">
+                            <p>Canceled</p>
+                            <div id="bar4" class="barfiller">
+                                <div class="tipWrap">
+                                    <span class="tip"></span>
+                                </div>
+                                <span class="fill" data-percentage="20"></span>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="border-line"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- ##### About Area End ##### -->
+    <!-- ##### Testimonial Area End ##### -->
+    <!-- jQuery-2.2.4 js -->
+    <style>
+        .margin-top-50 {
+            margin-top: 100px;
+        }
+    </style>
+    <script src={{asset('front/js/jquery/jquery-2.2.4.min.js')}}></script>
+    <!-- Popper js -->
+    <script src={{asset('front/js/bootstrap/popper.min.js')}}></script>
+    <!-- Bootstrap js -->
+    <script src={{asset('front/js/bootstrap/bootstrap.min.js')}}></script>
+    <!-- All Plugins js -->
+    <script src={{asset('front/js/plugins/plugins.js')}}></script>
+    <!-- Active js -->
+    <script src={{asset('front/js/active.js')}}></script>
+    </body>
+</html>
+

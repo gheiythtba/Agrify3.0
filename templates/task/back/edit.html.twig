@@ -1,0 +1,36 @@
+{# new.html.twig #}
+
+{% extends 'baseAdmin.html.twig' %}
+
+{% block body %}
+<div class="adminTaskPanel">
+
+<div class="titleContainer">
+    <a href="{{ path('app_task_index')  }}" class="btn alazea-btn active">
+        <i class="fa-solid fa-chevron-left"></i>
+    </a>
+
+    <h1>{{task.taskTitle}}</h1>
+</div>
+
+{{ include('task/back/_form.html.twig') }}
+</div>
+<style>
+    .titleContainer {
+        display: flex;
+        gap: 5px;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+
+    .titleContainer h1{
+        margin: 0;
+    }
+
+    .titleContainer i{
+        color: #000;
+    }
+
+</style>
+{% endblock %}
+

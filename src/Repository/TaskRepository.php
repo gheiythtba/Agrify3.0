@@ -21,6 +21,43 @@ class TaskRepository extends ServiceEntityRepository
         parent::__construct($registry, Task::class);
     }
 
+    public function findByFilters(?array $filters = null)
+    {
+
+        if ($filters === null) {
+            
+            return $this->createQueryBuilder('t')
+                ->getQuery()
+                ->getResult();
+        }
+
+        if(isset($filters['task_filter'])){
+            $filters = $filters['task_filter'];
+        }
+
+        $queryBuilder = $this->createQueryBuilder('t');
+
+        if (isset($filters['createdAfter'])  && $filters['createdAfter']!= '') {
+            $createdAfterDate = \DateTime::createFromFormat('Y-m-d', $filters['createdAfter']);
+            if ($createdAfterDate instanceof \DateTime) {
+                $queryBuilder->andWhere('t.creationDate > :createdAfter')->setParameter('createdAfter', $createdAfterDate);
+            }
+        }
+
+        if (isset($filters['dueBefore']) && $filters['dueBefore']!= '') {
+            $dueBeforeDate = \DateTime::createFromFormat('Y-m-d', $filters['dueBefore']);
+            if ($dueBeforeDate instanceof \DateTime) {
+                $queryBuilder->andWhere('t.deadline < :dueBefore')->setParameter('dueBefore', $dueBeforeDate);
+            }
+        }
+
+        if (isset($filters['searchTitle'])) {
+            $queryBuilder->andWhere('t.taskTitle LIKE :searchTitle')->setParameter('searchTitle', '%' . $filters['searchTitle'] . '%');
+        }
+
+        return $queryBuilder->getQuery()->getResult();
+    }
+
 //    /**
 //     * @return Task[] Returns an array of Task objects
 //     */

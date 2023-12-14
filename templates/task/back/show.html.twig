@@ -1,0 +1,136 @@
+{% extends 'baseAdmin.html.twig' %}
+
+{% block title %}
+  Task
+{% endblock %}
+
+{% block body %}
+  <div class="container">
+    <div class="taskPanelHeader">
+        <div class="leftSection">
+            <a href="{{ path('app_task_index') }}" class="btn alazea-btn active">
+              <i class="fa-solid fa-chevron-left"></i>
+            </a>
+          <h1>{{task.taskTitle}}</h1>           
+        </div>    
+
+        <div class="rightSection">
+          <button class="btn editTaskBtn">
+            <a href="{{ path('app_task_edit', { id: task.id }) }}" class="btn alazea-btn active">Edit Task</a>
+          </button>
+          
+          {{ include('task/back/_delete_form.html.twig') }}          
+           
+        </div>    
+
+    </div>
+
+    <table class="table">
+      <tbody>
+        
+        <tr>
+          <th>TaskTitle</th>
+          <td>{{ task.taskTitle }}</td>
+        </tr>
+        <tr>
+          <th>CreationDate</th>
+          <td>{{ task.creationDate ? task.creationDate|date('Y-m-d') : '' }}</td>
+        </tr>
+        <tr>
+          <th>Deadline</th>
+          <td>{{ task.deadline ? task.deadline|date('Y-m-d') : '' }}</td>
+        </tr>
+        <tr>
+          <th>Status</th>
+          <td>{{ task.status.value }}</td>
+        </tr>
+        <tr>
+          <th>Todos</th>
+          <td>
+            <table class="table">
+              <thead>
+                <th>Todo description</th>
+                <th>Severity</th>
+              </thead>
+              <tbody>
+                {% for todo in task.todos %}
+                <tr>
+                  <td>{{todo.todoDescription}}</td>
+                  <td>{{todo.severity.value}}</td>
+                  <td></td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+
+  <style>
+
+    h1 {
+      color: #000;
+    }
+
+    .table {
+      margin-top: 50px;
+    }
+  
+    .table th {
+        background: #2f3038;
+        color: #c1c6db;
+    }
+
+    .table td {
+        color: #2f3038;
+        border-bottom: 1px solid #b5b3b3;
+    }
+
+    .taskPanelHeader {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .taskPanelHeader .leftSection {
+        display: flex;
+        gap: 15px;
+        align-items: center;
+    }
+
+    .rightSection {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .editTaskBtn {
+        background: #2f3038;
+        border: none;
+        border-radius: 7px;
+        width: 130px;
+        height: 44px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .editTaskBtn a {
+      text-decoration: none;
+      color: #c1c6db;
+    }
+
+    .deleteTaskBtn {
+      background: #db2742;
+      color: #c1c6db;
+      border: none;
+      width: 130px;
+      height: 44px;
+      border-radius: 7px;
+    }
+
+  </style>
+{% endblock %}

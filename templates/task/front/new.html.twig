@@ -1,0 +1,9 @@
+{# new.html.twig #}
+
+{% extends 'task.html.twig' %}
+
+{% block body %}
+<h1>Create Task</h1>
+{{ include('task/_form.html.twig') }}
+    <a href="{{ path('app_task_index')  }}" class="btn alazea-btn active">back to list</a>
+{% endblock %}

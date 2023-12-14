@@ -1,0 +1,50 @@
+{% extends 'task.html.twig' %}
+
+{% block title %}
+  Task index
+{% endblock %}
+
+{% block body %}
+  <div class="adminTaskPanel">
+
+    <h1>tasks</h1>
+   
+    <table class="table">
+        <thead>
+            <tr>
+                 <th>Task Title</th>
+                <th>Creation date</th>
+                <th>Deadline</th>
+                <th>Status</th>
+                <th>show</th>
+                <th>edit</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for task in tasks %}
+            <tr>
+                <td>{{ task.taskTitle }}</td>
+                  <td>{{ task.creationDate ? task.creationDate|date('Y-m-d') : '' }}</td>
+                  <td>{{ task.deadline ? task.deadline|date('Y-m-d') : '' }}</td>
+                  <td>{{ task.status.value }}</td>
+                <td>
+                    <a href="{{ path('app_task_show', { 'id': task.id }) }}">show</a>
+                    </td>
+                    <td>
+                    <a href="{{ path('app_task_edit', { 'id': task.id }) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    
+
+
+    <a href="{{ path('app_task_new') }}" class="btn alazea-btn active">Create new</a>
+  
+{% endblock %}

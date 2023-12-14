@@ -1,0 +1,33 @@
+.mainContentWrapper {
+  padding: 20px;
+}
+
+.adminTaskPanel {
+  padding: 0 10px;
+  margin-top: 50px;
+  color: #000;
+}
+
+.adminTaskPanel h1 {
+  color: #000;
+}
+
+
+.adminTaskPanel input {
+  background: #c1c6db !important;
+  color: #2f3038!important;
+
+}
+
+
+
+.adminTaskPanel .layout .titleSection{
+  display: flex;
+  justify-content: space-between;
+   
+}
+
+
+::-webkit-scrollbar {
+  display: none !important;
+}
