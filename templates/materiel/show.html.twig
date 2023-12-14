@@ -1,76 +1,127 @@
-{% extends 'base.html.twig' %}
+{% extends 'baseAdmin.html.twig' %}
 
 {% block title %}Materiel{% endblock %}
 
 {% block stylesheets %}
     {{ parent() }}
-    <link rel="stylesheet" href="assets/css/style.css">
+    <style>
+        /* Inserted CSS */
+        .action-box {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .action-box img {
+            width: 30px; /* Adjust the image size */
+            margin-right: 10px;
+        }
+
+        .action-box a {
+            text-decoration: none;
+            color: #333;
+            font-weight: bold;
+        }
+
+        .show-container {
+            background: url('https://static.vecteezy.com/system/resources/previews/003/127/961/non_2x/abstract-template-background-white-and-gray-squares-free-vector.jpg');
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .materiel-box {
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+
+        .materiel-details th {
+            font-weight: bold;
+        }
+
+        .icon {
+            width: 50px; /* Adjust the image size */
+        }
+
+        .text-div {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .large-text {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .small-text {
+            font-size: 14px;
+            color: #666;
+        }
+    </style>
 {% endblock %}
 
-
 {% block body %}
+    <div class="show-container">
+        <div>
+            <div class="action-box">
+                <img src="{{ asset('images/reload.png') }}" alt="Icon">
+                <a href="{{ path('app_materiel_index') }}">Back to List</a>
+            </div>
 
-<div style="background: url(https://static.vecteezy.com/system/resources/previews/003/127/961/non_2x/abstract-template-background-white-and-gray-squares-free-vector.jpg)" class="show-container ">
-    <div >
-        <div class="action-box">
-            <img src="{{ asset('images/reload.png') }}" alt="Icon">
-            <a href="{{ path('app_materiel_index') }}">Back to List</a>
+            <div class="action-box">
+                <img src="{{ asset('images/edit.png') }}" alt="Icon">
+                <a href="{{ path('app_materiel_edit', {'id': materiel.id}) }}">Edit</a>
+            </div>
+
+            <div class="action-box">
+                <img src="{{ asset('images/print_icon.png') }}" alt="Icon">
+                <a>Print PDF</a>
+            </div>
+        </div>
+        <div class="materiel-box">
+
+            <h1>Materiel N°{{ materiel.id }}:</h1>
+
+            <div class="materiel-details">
+                <table class="table">
+                    <tbody>
+                    <tr>
+                        <th>Id</th>
+                        <td>{{ materiel.id }}</td>
+                    </tr>
+                    <tr>
+                        <th>Type</th>
+                        <td>{{ materiel.type }}</td>
+                    </tr>
+                    <tr>
+                        <th>Etat</th>
+                        <td>{{ materiel.etat }}</td>
+                    </tr>
+                    <tr>
+                        <th>Capacite_masse</th>
+                        <td>{{ materiel.capaciteMasse }}</td>
+                    </tr>
+                    <tr>
+                        <th>Capacite_volume</th>
+                        <td>{{ materiel.capaciteVolume }}</td>
+                    </tr>
+                    <tr>
+                        <th>Prix</th>
+                        <td>{{ materiel.prix }}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
 
-        <div class="action-box">
-            <img src="{{ asset('images/edit.png') }}" alt="Icon">
-            <a href="{{ path('app_materiel_edit', {'id': materiel.id}) }}">Edit</a>
-        </div>
-
-        <div class="action-box">
-            <img src="{{ asset('images/print_icon.png') }}" alt="Icon">
-            <a >Print PDF</a>
+        {{ include('materiel/_delete_form.html.twig') }}
+        <div class="text-div">
+            <img src="{{ asset('images/logo.png') }}" alt="Icon" class="icon">
+            <div class="large-text">Agrify</div>
+            <div class="small-text">Pour une gestion de ferme plus facile.</div>
         </div>
     </div>
-<div class="materiel-box" >
-
-        <h1>Materiel N°{{ materiel.id }}:</h1>
-
-        <div class="materiel-details">
-            <table class="table">
-                <tbody>
-                <tr>
-                    <th>Id</th>
-                    <td>{{ materiel.id }}</td>
-                </tr>
-                <tr>
-                    <th>Type</th>
-                    <td>{{ materiel.type }}</td>
-                </tr>
-                <tr>
-                    <th>Etat</th>
-                    <td>{{ materiel.etat }}</td>
-                </tr>
-                <tr>
-                    <th>Capacite_masse</th>
-                    <td>{{ materiel.capaciteMasse }}</td>
-                </tr>
-                <tr>
-                    <th>Capacite_volume</th>
-                    <td>{{ materiel.capaciteVolume }}</td>
-                </tr>
-                <tr>
-                    <th>Prix</th>
-                    <td>{{ materiel.prix }}</td>
-                </tr>
-
-                </tbody>
-            </table>
-
-        </div>
-    </div>
-
-    {{ include('materiel/_delete_form.html.twig') }}
-    <div class="text-div">
-        <img src="{{ asset('images/logo.png') }}" alt="Icon" class="icon">
-        <div class="large-text">Agrify</div>
-        <div class="small-text">Pour une gestion de ferme plus facile.</div>
-    </div>
-</div>
     {{ include('materiel/footer.html.twig') }}
 {% endblock %}

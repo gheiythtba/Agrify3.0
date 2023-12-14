@@ -1,24 +1,26 @@
-{% extends 'base.html.twig' %}
+{% extends 'baseAdmin.html.twig' %}
 
 {% block title %}Edit Materiel{% endblock %}
 
 {% block body %}
-    {{ include('materiel/header.html.twig') }}
-    <div style="background: url(https://img.freepik.com/free-photo/sunset-rural-farm-growth-abounds-generated-by-ai_24640-80532.jpg?w=826&t=st=1700163182~exp=1700163782~hmac=fb8f477aa52dca8055d3df54be5e33582c93788a8595e75d075e360ce9e6ffca)" class="main-container ">
-
-        <div class="form-container">
-            <h1>Edit Materiel</h1>
-
-            {{ include('materiel/_form.html.twig', {'button_label': 'Update'}) }}
-            {{ include('materiel/_delete_form.html.twig') }}
-            <a href="{{ path('app_materiel_index') }}" class="back-link">Back to List</a>
-
-            </div>
+    <div style="padding: 50px;">
+        <div style="background-color: rgba(255, 255, 255, 0.8); padding: 20px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+            <h1 style="text-align: center; margin-bottom: 20px;">Edit Materiel</h1>
+            <table style="width: 100%; border-collapse: collapse;">
+                <tr>
+                    <td style="vertical-align: top; padding-right: 20px;">
+                        <div class="form-container">
+                            {{ include('materiel/_form.html.twig', {'button_label': 'Update'}) }}
+                        </div>
+                    </td>
+                    <td style="vertical-align: top;">
+                        <div class="form-container">
+                            {{ include('materiel/_delete_form.html.twig') }}
+                            <a href="{{ path('app_materiel_index') }}" class="back-link" style="display: block; margin-top: 20px; text-align: center;">Back to List</a>
+                        </div>
+                    </td>
+                </tr>
+            </table>
         </div>
     </div>
-
-
-    {{ include('materiel/footer.html.twig') }}
-
-
 {% endblock %}
