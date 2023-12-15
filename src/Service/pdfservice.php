@@ -4,7 +4,7 @@ namespace App\Service;
 use Dompdf\Dompdf;
 use Dompdf\Options;
 
-class PdfService {
+class pdfservice {
 
     private $domPdf;
 
