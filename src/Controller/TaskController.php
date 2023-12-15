@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Task;
+use App\Entity\TaskStatus;
 use App\Form\Task1Type;
 use App\Form\TaskFilterType;
 use App\Repository\TaskRepository;
@@ -20,6 +21,7 @@ use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
 
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Mailer\MailerInterface;
 
 #[Route('/AdminDashboard/task')]
@@ -43,6 +45,14 @@ class TaskController extends AbstractController
         'form' => $form->createView(),
     ]);
     
+  }
+
+  #[Route('/all', name: 'app_task_index_all', methods: ['GET'])]
+  public function index2(TaskRepository $taskRepository , Request $request): Response
+  {
+      return $this->render('task/front/index.html.twig', [
+          'tasks' => $taskRepository->findAll(),
+      ]);
   }
 
   #[Route('/new', name: 'app_task_new', methods: ['GET', 'POST'])]
@@ -220,5 +230,27 @@ class TaskController extends AbstractController
 
     return $this->redirectToRoute('app_task_index', [], Response::HTTP_SEE_OTHER);
   }
+
+  #[Route('/update_task_status/{id}', name: 'update_task_status', methods: ['POST'])]
+  public function updateTaskStatus($id, Request $request, TaskRepository $taskRepository, EntityManagerInterface $entityManager): Response
+  {   
+   
+      $task = $taskRepository->find($id);
+      
+      if (!$task) {
+          return new JsonResponse(['error' => 'Task not found'], JsonResponse::HTTP_NOT_FOUND);
+      }
+  
+      $newStatus = $request->request->get('newStatus');
+      $newStatus="Completed";
+      // Update the status as needed
+      $task->setStatus(TaskStatus::COMPLETED);
+      $entityManager->persist($task);
+      $entityManager->flush();
+  
+      return $this->redirectToRoute('app_task_index_all', [], Response::HTTP_SEE_OTHER);
+  }
+
+  
 
 }

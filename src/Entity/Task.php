@@ -13,9 +13,9 @@ use Doctrine\ORM\Mapping as ORM;
 enum TaskStatus: string
 {
     case OPEN = 'Open';
-    case IN_PROGRESS = 'In progress';
+    case IN_PROGRESS = 'In_progress';
     case COMPLETED = 'Completed';
-    case IN_REVIEW = 'In review';
+    case IN_REVIEW = 'In_review';
     case CANCELED = 'Canceled';
 }
 

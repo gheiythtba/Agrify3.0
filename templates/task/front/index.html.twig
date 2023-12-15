@@ -1,21 +1,142 @@
-{% extends 'task.html.twig' %}
+{% extends 'AnimalManagement.html.twig' %}
 
-{% block title %}
-  Task index
-{% endblock %}
+{% block title %}task index{% endblock %}
+{% block section %}{% endblock %}
+{% block animal %}{% endblock %}
+{% block newBorn %}{% endblock %}
+{% block nutritionalneeds %}{% endblock %}
+{% block ration %}{% endblock %}
+{% block gestation %}{% endblock %}
 
 {% block body %}
-  <div class="adminTaskPanel">
 
-    <h1>tasks</h1>
-   
+  <h1>Task List</h1>
+<!-- ##### info ##### -->
+
+{% set  all = 0 %}
+{% set  OPEN = 0 %}
+{% set  IN_PROGRESS = 0 %}
+{% set  COMPLETED = 0 %}
+{% set  IN_REVIEW = 0 %}
+{% set  CANCELED = 0 %}
+
+
+ {% for task in tasks %}
+ {% set all = all + 1 %}
+  {% if task.status.value  == "Open"  %} {% set OPEN = OPEN + 1 %} {% endif %}
+  {% if task.status.value  == "In progress"  %} {% set IN_PROGRESS = IN_PROGRESS + 1 %} {% endif %}
+  {% if task.status.value  == "Completed"  %} {% set COMPLETED = COMPLETED + 1 %} {% endif %}
+  {% if task.status.value  == "In review"  %} {% set IN_REVIEW = IN_REVIEW + 1 %} {% endif %}
+  {% if task.status.value  == "Canceled"  %} {% set CANCELED = CANCELED + 1 %} {% endif %}
+
+ {% endfor %}
+ 
+{% set  all = ( COMPLETED / all ) * 100 %}
+
+
+
+<section id="wrapper">
+  <div class="p-4">
+
+
+
+
+    <section class="statis mt-4 text-center">
+      <div class="row">
+        <div class="col-md-6 col-lg-2 mb-2 mb-lg-0">
+          <div class="box bg-primary p-3">
+            <i class="uil-eye"></i>
+            <h3>{{OPEN}}</h3>
+            <p class="lead">Open</p>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-2 mb-2 mb-lg-0">
+          <div class="box bg-danger p-3">
+            <i class="uil-user"></i>
+            <h3>{{CANCELED}}</h3>
+            <p class="lead">Canceled</p>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-2 mb-2 mb-lg-0">
+          <div class="box bg-info p-3">
+            <i class="uil-shopping-cart"></i>
+            <h3>{{IN_PROGRESS}}</h3>
+            <p class="lead">In progress</p>
+          </div>
+        </div>
+         <div class="col-md-6 col-lg-2 mb-2 mb-lg-0">
+          <div class="box bg-warning p-3">
+            <i class="uil-shopping-cart"></i>
+            <h3>{{IN_REVIEW}}</h3>
+            <p class="lead">In review</p>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-3">
+          <div class="box bg-success p-3">
+            <i class="uil-feedback"></i>
+            <h3>{{COMPLETED}}</h3>
+            <p class="lead">Completed</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </div>
+</section>
+
+
+
+
+<!-- ##### Sorting ##### -->
+<div class="progress-pie-chart" data-percent="{{all}}">
+  <div class="ppc-progress">
+    <div class="ppc-progress-fill"></div>
+  </div>
+  <div class="ppc-percents">
+    <div class="pcc-percents-wrapper">
+      <span>%</span>
+    </div>
+  </div>
+</div>
+<!-- ##### search ##### -->
+
+ 
+
+<section class="subscribe-newsletter-area">
+    <div class="container">
+        <div class="row align-items-center justify-content-between">
+            <div class="col-12 col-lg-5">
+                <!-- Section Heading -->
+            </div>
+            <div class="col-12 col-lg-6">
+                <div class="subscribe-form">
+                    <form >
+                      <input type="text" name="search" id="searchInput" placeholder="rechercher">
+
+                    
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+
+<!-- ##### search##### -->
+
+<!-- ##### Sorting ##### -->
+ 
+
     <table class="table">
         <thead>
             <tr>
-                 <th>Task Title</th>
-                <th>Creation date</th>
-                <th>Deadline</th>
-                <th>Status</th>
+                <th>Id</th>
+                <th>Name</th>
+                <th>creation_date</th>
+                <th>deadline</th>
+                <th>status</th>
                 <th>show</th>
                 <th>edit</th>
             </tr>
@@ -23,28 +144,370 @@
         <tbody>
         {% for task in tasks %}
             <tr>
+                <td>{{ task.id }}</td>
                 <td>{{ task.taskTitle }}</td>
-                  <td>{{ task.creationDate ? task.creationDate|date('Y-m-d') : '' }}</td>
-                  <td>{{ task.deadline ? task.deadline|date('Y-m-d') : '' }}</td>
-                  <td>{{ task.status.value }}</td>
-                <td>
-                    <a href="{{ path('app_task_show', { 'id': task.id }) }}">show</a>
-                    </td>
+                <td>{{ task.creationDate|date('Y-m-d') }}</td>
+                <td>{{ task.deadline|date('Y-m-d') }}</td>
+                <td>{{ task.status.value }}</td>
+               
                     <td>
-                    <a href="{{ path('app_task_edit', { 'id': task.id }) }}">edit</a>
-                </td>
+                    <a href="#" class="show-task" data-toggle="modal" data-target="#showModal" data-task-id="{{ task.id }}">show</a>
+                    </td>
+                   <td>
+                        <a href="#" class="edit-task" data-toggle="modal" data-target="#editModal" data-task-id="{{ task.id }}">edit</a>
+                   </td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="6">no records found</td>
+                <td colspan="10">no records found</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
+
+
+
+<!-- Modal -->
+
+<div class="modal fade" id="showModal" tabindex="-1" role="dialog" aria-labelledby="showModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="showModalLabel">Task Details</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="form-group">
+                <label for="taskName"><strong>Name:</strong></label>
+                <p id="taskName"></p>
+              </div>
+              <div class="form-group">
+                <label for="creationDate"><strong>Creation Date:</strong></label>
+                <p id="creationDate"></p>
+              </div>
+              <div class="form-group">
+                <label for="deadline"><strong>Deadline:</strong></label>
+                <p id="deadline"></p>
+              </div>
+              <div class="form-group">
+                <label for="status"><strong>Status:</strong></label>
+                <p id="status"></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="showModalLabel">Task Details</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="form-group">
+                <label for="taskName"><strong>Name:</strong></label>
+                <p id="taskName"></p>
+              </div>
+              <div class="form-group">
+                <label for="creationDate"><strong>Creation Date:</strong></label>
+                <p id="creationDate"></p>
+              </div>
+              
+                 <div class="form-group">
+                <label for="taskId"><strong>taskId :</strong></label>
+                <p id="taskId"></p>
+              </div>
+
+              <div class="form-group">
+                <label for="deadline"><strong>Deadline:</strong></label>
+                <p id="deadline"></p>
+              </div>
+               <div class="form-group">
+          <label for="editStatus"><strong>Status:</strong></label>
+          
+          <form id="updateStatusForm" action="{{ path('update_task_status', {'id': 1}) }}" method="post">
+        
+          <select class="form-control" id="editStatus" name="editStatus">
+            <option value="Open">Open</option>
+            <option value="In Progress">In Progress</option>
+            <option value="Completed">Completed</option>
+            <option value="In Review">In Review</option>
+            <option value="CANCELED">Canceled</option>
+            <!-- Add other status options as needed -->
+          </select>
+        </div>
+         <div class="form-group text-center">
+               
+                <input type="hidden" id="newStatus" name="newStatus" value="Completed" />
+                <button type="submit " class="bg-primary" id="saveEdit">Save</button>
+            
+        </div>
+        </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal -->
+
+
+
+
+
+
+
+
+
+<!--script--><!--script--><!--script--><!--script--><!--script--><!--script-->
+
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+<script>
+  $(function () {
+    // Handle click on "show" link
+    $('.show-task').on('click', function () {
+      var taskName = $(this).closest('tr').find('td:eq(1)').text();  // Change the index based on your table structure
+      var creationDate = $(this).closest('tr').find('td:eq(2)').text();  // Change the index based on your table structure
+      var deadline = $(this).closest('tr').find('td:eq(3)').text();  // Change the index based on your table structure
+      var status = $(this).closest('tr').find('td:eq(4)').text();  // Change the index based on your table structure
+
+      // Set modal content with the extracted data
+      $('#showModal #taskName').text(taskName);
+      $('#showModal #creationDate').text(creationDate);
+      $('#showModal #deadline').text(deadline);
+      $('#showModal #status').text(status);
+    });
+  });
+
+
+  $(function () {
+    // Handle click on "show" link
+    $('.edit-task').on('click', function () {
+        var taskId = $(this).closest('tr').find('td:eq(0)').text();
+      var taskName = $(this).closest('tr').find('td:eq(1)').text();  // Change the index based on your table structure
+      var creationDate = $(this).closest('tr').find('td:eq(2)').text();  // Change the index based on your table structure
+      var deadline = $(this).closest('tr').find('td:eq(3)').text();  // Change the index based on your table structure
+      var status = $(this).closest('tr').find('td:eq(4)').text();  // Change the index based on your table structure
+
+      // Set modal content with the extracted data
+      $('#editModal #taskId').text(taskId);
+      $('#editModal #taskName').text(taskName);
+      $('#editModal #creationDate').text(creationDate);
+      $('#editModal #deadline').text(deadline);
+      $('#editModal #status').text(status);
+    });
+
+     $('#saveEdit').on('click', function () {
+    var editedStatus = $('#editStatus').val();
     
+    // Update the task status using AJAX or any other method
+
+    // Hide the modal
+    $('#editModal').modal('hide');
+  });
+  });
 
 
-    <a href="{{ path('app_task_new') }}" class="btn alazea-btn active">Create new</a>
   
+</script>
+
+<script>
+  $(function(){
+    var $ppc = $('.progress-pie-chart'),
+      percent = parseInt($ppc.data('percent')),
+      deg = 360 * percent / 100;
+    if (percent > 50) {
+      $ppc.addClass('gt-50');
+    }
+    $('.ppc-progress-fill').css('transform','rotate('+ deg +'deg)');
+    $('.ppc-percents span').html(percent+'%');
+  });
+</script>
+
+
+<script>
+  $(function(){
+    // ... your existing code
+
+    // Filter table on key press
+    $('#searchInput').on('input', function() {
+      var searchText = $(this).val().toLowerCase();
+
+      // Hide all rows initially
+      $('table tbody tr').hide();
+
+      // Filter and show rows that match the search text
+      $('table tbody tr').filter(function() {
+        return $(this).text().toLowerCase().indexOf(searchText) > -1;
+      }).show();
+    });
+  });
+</script>
+
+
+
+
+
+  <style>
+  .progress-pie-chart {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  background-color: #e5e5e5;
+  position: relative;
+}
+.progress-pie-chart.gt-50 {
+  background-color: #81ce97;
+}
+
+.ppc-progress {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+  left: calc(50% - 100px);
+  top: calc(50% - 100px);
+  width: 200px;
+  height: 200px;
+  clip: rect(0, 200px, 200px, 100px);
+}
+.ppc-progress .ppc-progress-fill {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+  left: calc(50% - 100px);
+  top: calc(50% - 100px);
+  width: 200px;
+  height: 200px;
+  clip: rect(0, 100px, 200px, 0);
+  background: #81ce97;
+  transform: rotate(60deg);
+}
+.gt-50 .ppc-progress {
+  clip: rect(0, 100px, 200px, 0);
+}
+.gt-50 .ppc-progress .ppc-progress-fill {
+  clip: rect(0, 200px, 200px, 100px);
+  background: #e5e5e5;
+}
+
+.ppc-percents {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+  left: calc(50% - 173.9130434783px/2);
+  top: calc(50% - 173.9130434783px/2);
+  width: 173.9130434783px;
+  height: 173.9130434783px;
+  background: #fff;
+  text-align: center;
+  display: table;
+}
+.ppc-percents span {
+  display: block;
+  font-size: 2.6em;
+  font-weight: bold;
+  color: #81ce97;
+}
+
+.pcc-percents-wrapper {
+  display: table-cell;
+  vertical-align: middle;
+}
+
+body {
+  font-family: Arial;
+  background: #f7f7f7;
+}
+
+.progress-pie-chart {
+  margin: 50px auto 0;
+}  </style>
+
+
+
+ <style>
+    @import 'https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet';
+
+:root {
+	--dk-gray-100: #F3F4F6;
+	--dk-gray-200: #E5E7EB;
+	--dk-gray-300: #D1D5DB;
+	--dk-gray-400: #9CA3AF;
+	--dk-gray-500: #6B7280;
+	--dk-gray-600: #4B5563;
+	--dk-gray-700: #374151;
+	--dk-gray-800: #1F2937;
+	--dk-gray-900: #111827;
+	--dk-dark-bg: #313348;
+	--dk-darker-bg: #2a2b3d;
+	--navbar-bg-color: #6f6486;
+	--sidebar-bg-color: #252636;
+	--sidebar-width: 250px;
+}
+
+
+
+
+
+
+.statis {
+	color: var(--dk-gray-100);
+}
+
+.statis .box {
+	position: relative;
+	overflow: hidden;
+	border-radius: 3px;
+}
+
+.statis .box h3:after {
+	content: "";
+	height: 2px;
+	width: 70%;
+	margin: auto;
+	background-color: rgba(255, 255, 255, 0.12);
+	display: block;
+	margin-top: 10px;
+}
+
+.statis .box i {
+	position: absolute;
+	height: 70px;
+	width: 70px;
+	font-size: 22px;
+	padding: 15px;
+	top: -25px;
+	left: -25px;
+	background-color: rgba(255, 255, 255, 0.15);
+	line-height: 60px;
+	text-align: right;
+	border-radius: 50%;
+}
+
+    </style>
+
+   
 {% endblock %}
