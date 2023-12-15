@@ -74,10 +74,11 @@
 
 
 
-    <div class="btn-group"> <!-- Change the class to btn-group -->
+
         {{ include('reclamation/_form.html.twig', {'button_label': 'Update'}) }}
         <a href="{{ path('app_reclamation_index') }}">Back to List</a>
 
-        {{ include('reclamation/_delete_form.html.twig') }}
-    </div>
+
+
+    {{ include('reclamation/_delete_form.html.twig') }}
 {% endblock %}
